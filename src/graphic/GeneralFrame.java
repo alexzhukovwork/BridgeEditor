@@ -5,6 +5,20 @@
  */
 package graphic;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import static java.awt.Color.RED;
+import java.awt.Container;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Алексей
@@ -14,8 +28,14 @@ public class GeneralFrame extends javax.swing.JFrame {
     /**
      * Creates new form GeneralFrame
      */
+    private Model model = new Model(0, 0, 0);
+    private List<Model> models = new ArrayList<>();
+    private int number = 0;
+    
     public GeneralFrame() {
         initComponents();
+        setPaint();
+        setKeyListener();
     }
 
     /**
@@ -49,25 +69,28 @@ public class GeneralFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 348, Short.MAX_VALUE)
+            .addGap(0, 308, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 278, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(92, 92, 92))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -106,6 +129,168 @@ public class GeneralFrame extends javax.swing.JFrame {
                 new GeneralFrame().setVisible(true);
             }
         });
+    }
+    
+    double x = 0, y = 0, z = 0;
+    double cameraX = 0, cameraY = 0, cameraZ = 0;
+    double dx = 0, dy = 0, dz = 0;
+    double angleX = 0, angleY = 0, angleZ = 0;
+    
+    private void setKeyListener(){
+        this.setFocusable(true);
+        this.addKeyListener(new KeyListener(){
+            @Override
+            public void keyTyped(KeyEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                System.out.println(e.getKeyCode());
+                switch (e.getKeyCode()) {
+                    case 49:
+                        model = models.get(number%models.size());
+                        
+                        number++;
+                        break;
+                    case 87:
+                        model.worldX += 1;
+                        break;
+                    case 83:
+                        model.worldX -= 1;
+                        break;
+                    case 39:
+                        model.angleY -= 1;
+                        break;
+                    case 37:
+                        model.angleY += 1;
+                        break;
+                    case 38:
+                        model.angleX += 1;
+                        break;
+                    case 40:
+                        model.angleX -= 1;
+                        break;
+                    case 100:
+                        dx -= 1;
+                        cameraX -= 1;
+                        break;
+                    case 102:
+                        dx += 1;
+                        cameraX += 1;
+                        break;
+                    case 104:
+                        dy -= 1;
+                        cameraY -= 1;
+                        break;
+                    case 98:
+                        dy += 1;
+                        cameraY += 1;
+                        break;
+                    case 109:
+                        model.dx -= 0.1;
+                        model.dy -= 0.1;
+                        model.dz -= 0.1;
+                        dz -= 1;
+                        cameraZ -= 1;
+                        break;
+                    case 107:
+                        model.dx += 0.1;
+                        model.dy += 0.1;
+                        model.dz += 0.1;
+                        dz += 1;
+                        cameraZ += 1;
+                        break;
+                    case 105:
+                        model.angleZ++;
+                        break;
+                    case 103:
+                        model.angleZ--;
+                        break;
+                    case 33: 
+                        break;
+                    default:
+                        return;
+                }
+                
+                jPanel1.repaint();
+                
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                
+// throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        
+        jPanel1.addMouseListener(new MouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println(e.getX() + " " + e.getY());
+                models.add(new Model(e.getX(), e.getY(), 0));
+                jPanel1.repaint();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+              //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+               // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+            
+        });
+    }
+    
+    private void setPaint(){
+        
+        Container pane = this.jPanel1;
+        
+        pane.setLayout(new BorderLayout());
+        jPanel1 = new JPanel(){
+
+            @Override
+            public void setSize(int width, int height) {
+                super.setSize(width, height); //To change body of generated methods, choose Tools | Templates.
+            }
+            @Override
+            public void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setColor(Color.lightGray);
+                g2.fillRect(0, 0, getWidth(), getHeight());
+                double rAngleX = Math.toRadians(cameraX);
+                double rAngleY = Math.toRadians(cameraY);
+                double rAngleZ = Math.toRadians(cameraZ);
+           //     rAngleX = 0;
+           //     rAngleY = 0;
+           // /    rAngleZ = 0;
+            //    Matrix3.getRotateСam(rAngleX, rAngleY, rAngleZ);
+               // List <Model> newModels = new ArrayList<>();
+                if( !models.isEmpty() ){
+                   
+                    g2.drawImage(Render.getImage(models, getHeight(), getWidth(), 
+                            Matrix3.getCam(cameraX, cameraY, cameraZ, rAngleX, rAngleY, rAngleZ) ), 0, 0, null);
+
+                    //  angleX = angleY = angleZ = 0;
+                }
+            }
+        };
+        pane.add(jPanel1, BorderLayout.CENTER);
+
+        this.setFocusable(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
