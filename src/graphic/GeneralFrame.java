@@ -274,17 +274,10 @@ public class GeneralFrame extends javax.swing.JFrame {
                 double rAngleX = Math.toRadians(cameraX);
                 double rAngleY = Math.toRadians(cameraY);
                 double rAngleZ = Math.toRadians(cameraZ);
-           //     rAngleX = 0;
-           //     rAngleY = 0;
-           // /    rAngleZ = 0;
-            //    Matrix3.getRotateСam(rAngleX, rAngleY, rAngleZ);
-               // List <Model> newModels = new ArrayList<>();
+  
                 if( !models.isEmpty() ){
-                   
                     g2.drawImage(Render.getImage(models, getHeight(), getWidth(), 
                             Matrix3.getCam(cameraX, cameraY, cameraZ, rAngleX, rAngleY, rAngleZ) ), 0, 0, null);
-
-                    //  angleX = angleY = angleZ = 0;
                 }
             }
         };
