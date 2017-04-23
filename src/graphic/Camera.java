@@ -13,11 +13,31 @@ import java.util.List;
  * @author Алексей
  */
 public class Camera implements Coordinats{
+    public double x, y, z;
+    public double d;
+    public double angleX, angleY, angleZ;
+    public int width, height;
     List<Triangle> triangles = new ArrayList<>();
+    
+    public Camera(){
+        width = height = 0;
+        angleX = angleY = angleZ = 0;
+        x = y = z = 0;
+        d = 0;
+    }
     
     @Override
     public void setTriangle(List<Triangle> triangles) {
         this.triangles = triangles;
+    }
+    
+    public Matrix3 getCam(){
+        double rX = Math.toRadians(angleX);
+        double rY = Math.toRadians(angleY);
+        double rZ = Math.toRadians(angleZ);
+        
+        return Matrix3.getCam(x, y, z, 
+                rX, rY, rZ, d);
     }
     
 }

@@ -30,41 +30,36 @@ public class Matrix3 {
         return new Matrix3(result);
     }
     Vertex transform(Vertex in) {
+
         return new Vertex(
-            in.x * values[0] + in.y * values[4] + in.z * values[8] + in.w * values[12],
-            in.x * values[1] + in.y * values[5] + in.z * values[9] + in.w * values[13],
-            in.x * values[2] + in.y * values[6] + in.z * values[10] + in.w * values[14],
-            1     
+            (in.x * values[0] + in.y * values[4] + in.z * values[8] + in.w * values[12]) / in.w,
+            (in.x * values[1] + in.y * values[5] + in.z * values[9] + in.w * values[13]) / in.w,
+            (in.x * values[2] + in.y * values[6] + in.z * values[10] + in.w * values[14]) / in.w,
+            in.x * values[3] + in.y * values[7] + in.z * values[11] + in.w * values[15]    
         );
     }
     
     public static Matrix3 getRotateСam(double angleX, double angleY, double angleZ){
-        return new Matrix3(new double[]{
-            Math.cos(-angleZ), Math.sin(-angleZ), 0, 0,
-            -Math.sin(-angleZ), Math.cos(-angleZ), 0, 0,
-            0, 0, 1, 0,
-            0, 0, 0, 1
-        }).multiply(new Matrix3( new double[] {
+        return(new Matrix3( new double[] {
             Math.cos(-angleY), 0, -Math.sin(-angleY), 0,
             0, 1, 0, 0,
             Math.sin(-angleY), 0, Math.cos(-angleY), 0,
             0, 0, 0, 1
-   
         })).multiply(new Matrix3(new double[] {
             1, 0, 0, 0,
             0, Math.cos(-angleX), Math.sin(-angleX), 0,
             0, -Math.sin(-angleX), Math.cos(-angleX), 0,
             0, 0, 0, 1
+        })).multiply( new Matrix3(new double[]{
+            Math.cos(-angleZ), Math.sin(-angleZ), 0, 0,
+            -Math.sin(-angleZ), Math.cos(-angleZ), 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
         }));
     }
     
     public static Matrix3 getRotate(double angleX, double angleY, double angleZ){
-        return new Matrix3(new double[]{
-            Math.cos(angleZ), Math.sin(angleZ), 0, 0,
-            -Math.sin(angleZ), Math.cos(angleZ), 0, 0,
-            0, 0, 1, 0,
-            0, 0, 0, 1
-        }).multiply(new Matrix3( new double[] {
+        return (new Matrix3( new double[] {
             Math.cos(angleY), 0, -Math.sin(angleY), 0,
             0, 1, 0, 0,
             Math.sin(angleY), 0, Math.cos(angleY), 0,
@@ -74,6 +69,11 @@ public class Matrix3 {
             1, 0, 0, 0,
             0, Math.cos(angleX), Math.sin(angleX), 0,
             0, -Math.sin(angleX), Math.cos(angleX), 0,
+            0, 0, 0, 1
+        })).multiply(new Matrix3(new double[]{
+            Math.cos(angleZ), Math.sin(angleZ), 0, 0,
+            -Math.sin(angleZ), Math.cos(angleZ), 0, 0,
+            0, 0, 1, 0,
             0, 0, 0, 1
         }));
     }
@@ -97,9 +97,11 @@ public class Matrix3 {
     }
     
     public static Matrix3 getCam(double x, double y, double z, 
-            double angleX, double angleY, double angleZ){
-        System.out.println(x + y + z);
-        return (getRotateСam(angleX, angleY, angleZ) ).multiply(getCamCoordinat(x, y, z));
+            double angleX, double angleY, double angleZ, double d){
+        return getCamCoordinat(x, y, z).multiply( getRotateСam(angleX, angleY, angleZ) );
+        
+        
+              //  .multiply(getCamPerspective(d) );
     }
     
     public static Matrix3 getCamCoordinat(double x, double y, double z){
@@ -108,6 +110,15 @@ public class Matrix3 {
             0, 1, 0, 0,
             0, 0, 1, 0,
             -x, -y, -z, 1
+        });
+    }
+    
+    public static Matrix3 getCamPerspective(double d){
+        return new Matrix3(new double[]{
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 1 / d,
+            0, 0, 0, 0
         });
     }
     

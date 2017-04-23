@@ -31,11 +31,19 @@ public class GeneralFrame extends javax.swing.JFrame {
     private Model model = new Model(0, 0, 0);
     private List<Model> models = new ArrayList<>();
     private int number = 0;
+    private Camera camera;
+    
     
     public GeneralFrame() {
         initComponents();
         setPaint();
         setKeyListener();
+        camera = new Camera();
+        camera.d = 100;
+        camera.width = 600;
+        camera.height = 300;
+        //camera.angleX = -45;
+        
     }
 
     /**
@@ -65,11 +73,13 @@ public class GeneralFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setPreferredSize(new java.awt.Dimension(300, 600));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 308, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,14 +92,14 @@ public class GeneralFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
                 .addGap(92, 92, 92))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -131,11 +141,6 @@ public class GeneralFrame extends javax.swing.JFrame {
         });
     }
     
-    double x = 0, y = 0, z = 0;
-    double cameraX = 0, cameraY = 0, cameraZ = 0;
-    double dx = 0, dy = 0, dz = 0;
-    double angleX = 0, angleY = 0, angleZ = 0;
-    
     private void setKeyListener(){
         this.setFocusable(true);
         this.addKeyListener(new KeyListener(){
@@ -149,15 +154,20 @@ public class GeneralFrame extends javax.swing.JFrame {
                 System.out.println(e.getKeyCode());
                 switch (e.getKeyCode()) {
                     case 49:
-                        model = models.get(number%models.size());
-                        
+                        model = models.get(number % models.size());
                         number++;
                         break;
-                    case 87:
+                    case 68:
                         model.worldX += 1;
                         break;
-                    case 83:
+                    case 65:
                         model.worldX -= 1;
+                        break;
+                    case 87:
+                        model.worldY -= 1;
+                        break;
+                    case 83:
+                        model.worldY += 1;
                         break;
                     case 39:
                         model.angleY -= 1;
@@ -172,34 +182,28 @@ public class GeneralFrame extends javax.swing.JFrame {
                         model.angleX -= 1;
                         break;
                     case 100:
-                        dx -= 1;
-                        cameraX -= 1;
+                        camera.x -= 1;
                         break;
                     case 102:
-                        dx += 1;
-                        cameraX += 1;
+                        camera.x += 1;
                         break;
                     case 104:
-                        dy -= 1;
-                        cameraY -= 1;
+                        camera.y -= 1;
                         break;
                     case 98:
-                        dy += 1;
-                        cameraY += 1;
+                        camera.y += 1;
                         break;
                     case 109:
                         model.dx -= 0.1;
                         model.dy -= 0.1;
                         model.dz -= 0.1;
-                        dz -= 1;
-                        cameraZ -= 1;
+                        camera.z -= 1;
                         break;
                     case 107:
                         model.dx += 0.1;
                         model.dy += 0.1;
                         model.dz += 0.1;
-                        dz += 1;
-                        cameraZ += 1;
+                        camera.z += 1;
                         break;
                     case 105:
                         model.angleZ++;
@@ -207,7 +211,17 @@ public class GeneralFrame extends javax.swing.JFrame {
                     case 103:
                         model.angleZ--;
                         break;
-                    case 33: 
+                    case 84:
+                        camera.angleX++;
+                        break;
+                    case 71:
+                        camera.angleX--;
+                        break;
+                    case 72:
+                        camera.angleY++;
+                        break;
+                    case 70:
+                        camera.angleY--;
                         break;
                     default:
                         return;
@@ -227,8 +241,7 @@ public class GeneralFrame extends javax.swing.JFrame {
         jPanel1.addMouseListener(new MouseListener(){
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println(e.getX() + " " + e.getY());
-                models.add(new Model(e.getX(), e.getY(), 0));
+                models.add(new Model(e.getX() - 600 / 2, e.getY() - 300/2, 0));
                 jPanel1.repaint();
             }
 
@@ -263,21 +276,16 @@ public class GeneralFrame extends javax.swing.JFrame {
         jPanel1 = new JPanel(){
 
             @Override
-            public void setSize(int width, int height) {
-                super.setSize(width, height); //To change body of generated methods, choose Tools | Templates.
-            }
-            @Override
             public void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setColor(Color.lightGray);
                 g2.fillRect(0, 0, getWidth(), getHeight());
-                double rAngleX = Math.toRadians(cameraX);
-                double rAngleY = Math.toRadians(cameraY);
-                double rAngleZ = Math.toRadians(cameraZ);
-  
+
+                System.out.println("x = " + camera.x + " y = " + camera.y + " z = " + camera.z);
+                System.out.println("x = " + camera.angleX + " y = " + camera.angleY + " z = " + camera.angleZ);
                 if( !models.isEmpty() ){
-                    g2.drawImage(Render.getImage(models, getHeight(), getWidth(), 
-                            Matrix3.getCam(cameraX, cameraY, cameraZ, rAngleX, rAngleY, rAngleZ) ), 0, 0, null);
+                    g2.drawImage( Render.getImage(models, getHeight(), getWidth(), 
+                            camera ), 0, 0, null);
                 }
             }
         };

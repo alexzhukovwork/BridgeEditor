@@ -27,4 +27,18 @@ public class Vertex {
         this.z = z;
         this.w = 1;
     }
+    
+    static Vertex multipy(Vertex v1, Vertex v2){
+        return new Vertex( v1.y * v2.z - v1.z * v2.y,
+                v1.x * v2.z - v1.z * v2.x,
+                v1.x * v2.y - v1.y * v2.x);
+    }
+    
+    static Vertex getVector(Vertex v1, Vertex v2){
+        return new Vertex(v2.x - v1.x, v2.y - v1.y, v2.z - v1.z);
+    }
+    
+    static double multiplyScalar(Vertex view, Vertex n){
+        return n.x * view.x + n.y + view.y + n.z * view.z;
+    }
 }
