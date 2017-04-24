@@ -25,67 +25,8 @@ public class Model implements Coordinats{
         this.worldX = worldX;
         this.worldY = worldY;
         this.worldZ = worldZ;
-        createModel();
     }
     
-    public void createModel(){
-        triangles.add(new Triangle(new Vertex(50, -50, -50),
-                              new Vertex(50, -50, 50),
-                              new Vertex(50, 50, 50),
-                              Color.YELLOW));
-        triangles.add(new Triangle(new Vertex(50, 50, 50),
-                              new Vertex(50, 50, -50),
-                              new Vertex(50, -50, -50),
-                              Color.YELLOW));
-        triangles.add(new Triangle(new Vertex(50, 50, 50),
-                              new Vertex(50, -50, 50),
-                              new Vertex(-50, 50, 50),
-                              Color.WHITE));
-        triangles.add(new Triangle(new Vertex(50, -50, 50),
-                              new Vertex(-50, 50, 50),
-                              new Vertex(-50, -50, 50),
-                              Color.WHITE));
-        triangles.add(new Triangle(new Vertex(50, 50, -50),
-                              new Vertex(-50, 50, -50),
-                              new Vertex(50, -50, -50),
-                              Color.RED));
-        triangles.add(new Triangle(new Vertex(-50, -50, -50),
-                              new Vertex(50, -50, -50),
-                              new Vertex(-50, 50, -50),
-                              Color.RED));
-        triangles.add(new Triangle(new Vertex(-50, -50, 50),
-                              new Vertex(-50, -50, -50),
-                              new Vertex(-50, 50, 50),
-                              Color.GREEN));
-        triangles.add(new Triangle(new Vertex(-50, 50, -50),
-                              new Vertex(-50, 50, 50),
-                              new Vertex(-50, -50, -50),
-                              Color.GREEN));
-        triangles.add(new Triangle(new Vertex(50, 50, 50),
-                              new Vertex(50, 50, -50),
-                              new Vertex(-50, 50, 50),
-                              Color.BLUE));
-        triangles.add(new Triangle(new Vertex(-50, 50, -50),
-                              new Vertex(50, 50, -50),
-                              new Vertex(-50, 50, 50),
-                              Color.BLUE));
-        triangles.add(new Triangle(new Vertex(50, -50, 50),
-                              new Vertex(50, -50, -50),
-                              new Vertex(-50, -50, 50),
-                              Color.BLUE));
-        triangles.add(new Triangle(new Vertex(-50, -50, -50),
-                              new Vertex(50, -50, -50),
-                              new Vertex(-50, -50, 50),
-                              Color.BLUE));
-        triangles.add(new Triangle(new Vertex(100, 100, 100),
-                              new Vertex(100, -100, 100),
-                              new Vertex(-100, 100, 100),
-                              Color.WHITE));
-         triangles.add(new Triangle(new Vertex(100, -100, 100),
-                              new Vertex(-100, 100, 100),
-                              new Vertex(-100, -100, 100),
-                              Color.WHITE));
-    }
     
     public List<Triangle> getMatrix(){
         double x = Math.toRadians(angleX);
@@ -95,6 +36,7 @@ public class Model implements Coordinats{
                 .multiply(Matrix3.getWorld(worldX, worldY, worldZ));
         List<Triangle> newTriangles = new ArrayList<>();
    
+        
         for(Triangle t : triangles){
             Vertex v1 = newCoordinats.transform(t.v1);
             Vertex v2 = newCoordinats.transform(t.v2);

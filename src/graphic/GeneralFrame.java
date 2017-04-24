@@ -28,7 +28,7 @@ public class GeneralFrame extends javax.swing.JFrame {
     /**
      * Creates new form GeneralFrame
      */
-    private Model model = new Model(0, 0, 0);
+    private Model model;
     private List<Model> models = new ArrayList<>();
     private int number = 0;
     private Camera camera;
@@ -182,16 +182,16 @@ public class GeneralFrame extends javax.swing.JFrame {
                         model.angleX -= 1;
                         break;
                     case 100:
-                        camera.x -= 1;
+                        camera.x -= 5;
                         break;
                     case 102:
-                        camera.x += 1;
+                        camera.x += 5;
                         break;
                     case 104:
-                        camera.y -= 1;
+                        camera.y -= 5;
                         break;
                     case 98:
-                        camera.y += 1;
+                        camera.y += 5;
                         break;
                     case 109:
                         model.dx -= 0.1;
@@ -241,7 +241,7 @@ public class GeneralFrame extends javax.swing.JFrame {
         jPanel1.addMouseListener(new MouseListener(){
             @Override
             public void mouseClicked(MouseEvent e) {
-                models.add(new Model(e.getX() - 600 / 2, e.getY() - 300/2, 0));
+                models.add(new Bridge(e.getX(), e.getY(), 0));
                 jPanel1.repaint();
             }
 
@@ -278,6 +278,7 @@ public class GeneralFrame extends javax.swing.JFrame {
             @Override
             public void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
+                Render.g2 = g2;
                 g2.setColor(Color.lightGray);
                 g2.fillRect(0, 0, getWidth(), getHeight());
 

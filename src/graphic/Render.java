@@ -7,6 +7,8 @@ package graphic;
 
 import static com.sun.javafx.iio.ImageStorage.ImageType.RGB;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.List;
  * @author Алексей
  */
 public class Render {
+     public static Graphics2D g2;
      public static BufferedImage getImage(List<Model> models, int height, int width, Camera camera){
         
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -48,25 +51,31 @@ public class Render {
                     continue;
                 }
               */  Vertex v1 = transform.transform(t.v1);
-                double d1 = 600.0 * Math.tan(Math.toRadians(90/ 2)) / 2;
+             /*   double d1 = 600.0 * Math.tan(Math.toRadians(90/ 2)) / 2;
                 double d2 = 300.0 * Math.tan(Math.toRadians(90 / 2))/ 2;
                 
                System.out.println(camera.width);
-                System.out.println(d1);
+              /*  System.out.println(d1);
                 v1.x = alpha + alpha * v1.x;//(d1 * v1.x / v1.z);
                 v1.y = beta - beta * v1.y;//(d2 * v1.y  * 2/ v1.z);
-                
+                */
                 Vertex v2 = transform.transform(t.v2);
-                v2.x = alpha + alpha * v2.x;//(d1 * v2.x / v2.z);
+               /* v2.x = alpha + alpha * v2.x;//(d1 * v2.x / v2.z);
                 v2.y = beta - beta * v2.y;//(d2 * v2.y  * 2/ v2.z);
-
+*/
                 Vertex v3 = transform.transform(t.v3);
-                v3.x = alpha + alpha * v3.x;//(d1 * v3.x / v3.z);
+  /*              v3.x = alpha + alpha * v3.x;//(d1 * v3.x / v3.z);
                 v3.y = beta - beta * v3.y;//(d2 * v3.y  * 2/ v3.z);
-                
+    */            
+           /*     g2.setColor(Color.red);
+                Path2D path = new Path2D.Double();
+                path.moveTo(v1.x, v1.y);
+                path.lineTo(v2.x, v2.y);
+                path.lineTo(v3.x, v3.y);
+                path.closePath();
+                g2.draw(path);
 
-
-                int minX = (int) Math.max(0, Math.ceil(Math.min(v1.x, Math.min(v2.x, v3.x))));
+            */   int minX = (int) Math.max(0, Math.ceil(Math.min(v1.x, Math.min(v2.x, v3.x))));
                 int maxX = (int) Math.min(img.getWidth() - 1, Math.floor(Math.max(v1.x, Math.max(v2.x, v3.x))));
                 int minY = (int) Math.max(0, Math.ceil(Math.min(v1.y, Math.min(v2.y, v3.y))));
                 int maxY = (int) Math.min(img.getHeight() - 1, Math.floor(Math.max(v1.y, Math.max(v2.y, v3.y))));
