@@ -31,6 +31,8 @@ public class Bridge extends Model {
     double secondHoleHeight = 15;
     double thirdHoleHeight = 10;
     double holeBalkHeight = 5;
+    double bindingHeight = 5;
+    double bindingWidth = 5;
     int countThirdHole = 2;
     
     
@@ -51,6 +53,121 @@ public class Bridge extends Model {
         createMetal();
         createHole();
         createInclineSupport();
+    
+        createBinding();
+   /*  triangles.addAll( getRotateTriangle(supportWidth, bindingHeight, supportThick,
+                - (lowerSupportWidth / 2.5 - supportWidth) + supportWidth / 2, 
+                -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2), 
+                bridgeLength / 2, 0, 45, 0) );
+    */
+      createRope();
+    }
+    
+    private void createRope(){
+        double y = (supportHeight + bindingHeight + lowerSupportHeight / 2);
+        double z = 0;
+        
+        double p3X = bridgeLength / 2 - supportThick / 2;
+        double p3Y = -y;
+        
+        double p1X = -bridgeLength + supportThick / 2;
+        double p1Y = 0;
+        
+        double p2X =  -bridgeLength / 2 + supportThick / 2; 
+        double p2Y = supportHeight*2 - 2*bridgeLevel + lowerSupportHeight;
+        
+        int count = 10;
+        int currentCount = 0;
+        double distance = 0;
+        if(count == 1)
+            distance = bridgeLength / 6; 
+        else if(count > 0)
+            distance = (bridgeLength / 2 - bridgeLength / 5) / count;   
+        System.out.println("distance " + distance);
+        double allDistance = -bridgeLength / 2 + distance;
+        double t = 0;
+        double heightBalk = 0;
+        while(t <= 1) {
+            z = (1-t) * (1-t) * p1X + 2 * t * (1-t) * p2X + t * t + p3X; 
+            y = (1-t) * (1-t) * p1Y + 2 * t * (1-t) * p2Y + t * t + p3Y; 
+            System.out.println("z " + z + " y " + y + " bridgeLevel " + bridgeLevel);
+            
+            if (currentCount < count && z > allDistance) {
+                heightBalk = -(y + bridgeLevel + bridgeHeight);
+
+                triangles.addAll( createRectangleWorld(1, heightBalk, 1, -(lowerSupportWidth / 5 + supportWidth / 2) + 1, y + heightBalk / 2, z) );
+                triangles.addAll( createRectangleWorld(1, heightBalk, 1, -(lowerSupportWidth / 5 + supportWidth / 2) + 1, y + heightBalk / 2, -z) );
+                triangles.addAll( createRectangleWorld(1, heightBalk, 1, (lowerSupportWidth / 5 + supportWidth / 2) - 1, y + heightBalk / 2, z) );
+                triangles.addAll( createRectangleWorld(1, heightBalk, 1, (lowerSupportWidth / 5 + supportWidth / 2) - 1, y + heightBalk / 2, -z) );
+                allDistance += distance;
+                currentCount++;
+            }
+            triangles.addAll( createRectangleWorld(1, 1, 1, lowerSupportWidth / 5 + supportWidth / 2 - 1, y, z) );
+            triangles.addAll( createRectangleWorld(1, 1, 1, -(lowerSupportWidth / 5 +supportWidth / 2) + 1, y, z) );
+
+            
+            t += 0.001;
+            
+        }
+    }
+    
+    private void createBinding(){
+        double cat1 = supportWidth;
+        double cat2 = bindingHeight;
+        double gep = Math.sqrt(cat1 * cat1 + cat2 * cat2);
+        
+        triangles.addAll( getRotate( (lowerSupportWidth / 2.5 - supportWidth) / 2 + cat1 / 2,
+                -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2) , 
+                bridgeLength / 2,
+                0, 0, Math.atan(cat1 / cat2), 0.1, gep, supportThick) );
+        triangles.addAll( createRectangleWorld(0.1, bindingHeight, supportThick, 
+                (lowerSupportWidth / 2.5 - supportWidth) - 0.05
+                , -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2) 
+                , bridgeLength / 2) );
+        triangles.addAll( getRotateTriangle(supportWidth, bindingHeight, supportThick,
+                + (lowerSupportWidth / 2.5 - supportWidth) - supportWidth / 2, 
+                -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2), 
+                bridgeLength / 2, 0, 0, 0, 1) );
+        
+        triangles.addAll( getRotateTriangle(supportWidth, bindingHeight, supportThick,
+                - (lowerSupportWidth / 2.5 - supportWidth) + supportWidth / 2, 
+                -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2), 
+                bridgeLength / 2, 0, 0, 0, 0) );
+        triangles.addAll( createRectangleWorld(0.1, bindingHeight, supportThick, 
+                - (lowerSupportWidth / 2.5 - supportWidth) + 0.05
+                , -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2) 
+                , bridgeLength / 2) );
+        triangles.addAll( getRotate( -(lowerSupportWidth / 2.5 - supportWidth) / 2 - cat1 / 2,
+                -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2) , 
+                bridgeLength / 2,
+                0, 0, -Math.atan(cat1 / cat2), 0.1, gep, supportThick) );
+        
+        triangles.addAll( getRotate( (lowerSupportWidth / 2.5 - supportWidth) / 2 + cat1 / 2,
+                -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2) , 
+                -bridgeLength / 2,
+                0, 0, Math.atan(cat1 / cat2), 0.1, gep, supportThick) );
+        triangles.addAll( createRectangleWorld(0.1, bindingHeight, supportThick, 
+                (lowerSupportWidth / 2.5 - supportWidth) - 0.05
+                , -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2) 
+                , -bridgeLength / 2) );
+        triangles.addAll( getRotateTriangle(supportWidth, bindingHeight, supportThick,
+                + (lowerSupportWidth / 2.5 - supportWidth) - supportWidth / 2, 
+                -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2), 
+                -bridgeLength / 2, 0, 0, 0, 1) );
+        
+        triangles.addAll( getRotateTriangle(supportWidth, bindingHeight, supportThick,
+                - (lowerSupportWidth / 2.5 - supportWidth) + supportWidth / 2, 
+                -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2), 
+                -bridgeLength / 2, 0, 0, 0, 0) );
+        triangles.addAll( createRectangleWorld(0.1, bindingHeight, supportThick, 
+                - (lowerSupportWidth / 2.5 - supportWidth) + 0.05
+                , -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2) 
+                , -bridgeLength / 2) );
+        triangles.addAll( getRotate( -(lowerSupportWidth / 2.5 - supportWidth) / 2 - cat1 / 2,
+                -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2) , 
+                -bridgeLength / 2,
+                0, 0, -Math.atan(cat1 / cat2), 0.1, gep, supportThick) );
+        
     }
     
     private void createInclineSupport(){
@@ -160,6 +277,8 @@ public class Bridge extends Model {
     private void createMetal(){
         double x = 0, y = 0, z = 0;
         int count = (int)(bridgeLength / metalThick) - 1;
+        double gep = Math.sqrt( (metalThick - metalThick / 5) * (metalThick - metalThick / 5)
+                + (metalHeight - metalHeight / 5) * (metalHeight - metalHeight / 5) );
         for(int i = 0; i < 2; i++){
             for(int j = 0; j < count; j++){
                 x = bridgeWidth / 2 - i * (bridgeWidth - metalWidth);
@@ -171,15 +290,29 @@ public class Bridge extends Model {
                 triangles.addAll( createRectangleWorld(metalWidth / 5, metalHeight / 5, metalThick, x - metalThick, y + metalHeight, z) );
 
                 y = -(lowerSupportHeight/2 + bridgeLevel - bridgeHeight / 2 - metalHeight / 2.5);
-                z = -bridgeLength / 2 + supportThick / 2 + metalThick / 10 + j * metalThick;
+                z = -bridgeLength / 2 + supportThick / 2 + j * metalThick;
+                triangles.addAll( getRotate(x, y, z + metalThick / 2 + metalThick / 10, 
+                        Math.atan( (metalHeight - metalHeight / 5) / (metalThick - metalThick / 5) ), 0, 0, 
+                        metalWidth / 5, gep, metalThick / 5) );
+                triangles.addAll( getRotate(x, y, z + metalThick / 2 + metalThick / 10, 
+                        -Math.atan( (metalHeight - metalHeight / 5) / (metalThick - metalThick / 5) ), 0, 0, 
+                        metalWidth / 5, gep, metalThick / 5) );
+                triangles.addAll( getRotate(x - metalThick, y, z + metalThick / 2 + metalThick / 10, 
+                        Math.atan( (metalHeight - metalHeight / 5) / (metalThick - metalThick / 5) ), 0, 0, 
+                        metalWidth / 5, gep, metalThick / 5) );
+                triangles.addAll( getRotate(x - metalThick, y, z + metalThick / 2 + metalThick / 10, 
+                        -Math.atan( (metalHeight - metalHeight / 5) / (metalThick - metalThick / 5) ), 0, 0, 
+                        metalWidth / 5, gep, metalThick / 5) );
+              
+                
                 triangles.addAll( createRectangleWorld(metalWidth / 5, metalHeight, metalThick / 5, 
                         x, y, z) );
                 triangles.addAll( createRectangleWorld(metalWidth / 5, metalHeight, metalThick / 5, 
-                        x, y, z + metalThick - metalThick / 5) );
+                        x, y, z + metalThick) );
                 triangles.addAll( createRectangleWorld(metalWidth / 5, metalHeight, metalThick / 5, 
                         x - metalThick, y, z) );
                 triangles.addAll( createRectangleWorld(metalWidth / 5, metalHeight, metalThick / 5, 
-                        x - metalThick, y, z + metalThick - metalThick / 5) );
+                        x - metalThick, y, z + metalThick) );
 
                 x = bridgeWidth / 2 - metalWidth / 2 - i * (bridgeWidth - metalWidth);
                 y = -(lowerSupportHeight/2 + bridgeLevel - bridgeHeight / 2);
@@ -195,6 +328,26 @@ public class Bridge extends Model {
             } 
         }
     }
+    
+    private List<Triangle> getRotateTriangle(double width, double height, double thick,
+        double localX, double localY, double localZ,
+        double angleX, double angleY, double angleZ, int number){
+        List<Triangle> triangles = new ArrayList<>();
+        if(number == 0)
+            triangles = createTriangleFirst(width, height, thick);
+        else 
+            triangles = createTriangleSecond(width, height, thick);
+        Matrix3 transform = Matrix3.getRotate(angleX, angleY, angleZ).
+                multiply( Matrix3.getWorld(localX, localY, localZ) );
+        for(Triangle t : triangles){
+            t.v1 = transform.transform(t.v1);
+            t.v2 = transform.transform(t.v2);
+            t.v3 = transform.transform(t.v3);
+        }
+        
+        return triangles;
+    }
+  
     
     private List<Triangle> createRectangleWorld(double width, double height, double thick,
         double localX, double localY, double localZ){
@@ -216,6 +369,59 @@ public class Bridge extends Model {
         return triangles;
     }
     
+    private List<Triangle> createTriangleFirst(double width, double height, double thick){
+        double x = width / 2.0;
+        double y = height / 2.0;
+        double z = thick / 2.0; 
+        double step = 1;
+        
+        List <Triangle> triangles = new ArrayList<Triangle>();
+        for(double i = -y; i < y; i += height)
+            for(double j = -x; j < x; j += width)
+                for(double k = -z; k < z; k += thick){
+
+                    triangles.add( new Triangle(
+                        new Vertex(j + width, i + height, z),
+                        new Vertex(j        , i + height , z),
+                        new Vertex(j        , i         , z),
+                        Color.white) );
+
+                    triangles.add( new Triangle(
+                        new Vertex(j + width, i + height, -z),
+                        new Vertex(j , i + height , -z),
+                        new Vertex(j, i         , -z),
+                        Color.white) );
+                    System.out.println("ffff");
+                }
+        return triangles;
+    }
+    
+     private List<Triangle> createTriangleSecond(double width, double height, double thick){
+        double x = width / 2.0;
+        double y = height / 2.0;
+        double z = thick / 2.0; 
+        double step = 1;
+        
+        List <Triangle> triangles = new ArrayList<Triangle>();
+        for(double i = -y; i < y; i += height)
+            for(double j = -x; j < x; j += width)
+                for(double k = -z; k < z; k += thick){
+
+                    triangles.add( new Triangle(
+                        new Vertex(j + width, i + height, z),
+                        new Vertex(j        , i + height, z),
+                        new Vertex(j + width, i         , z),
+                        Color.white) );
+
+                    triangles.add( new Triangle(
+                        new Vertex(j + width, i + height, -z),
+                        new Vertex(j        , i + height, -z),
+                        new Vertex(j + width, i         , -z),
+                        Color.white) );
+                    System.out.println("ffff");
+                }
+        return triangles;
+    }
     private List<Triangle> createRectangle(double width, double height, double thick){
       
         double x = width / 2.0;
@@ -227,7 +433,6 @@ public class Bridge extends Model {
         for(double i = -y; i < y; i += height)
             for(double j = -x; j < x; j += width)
                 for(double k = -z; k < z; k += thick){
-
                     triangles.add( new Triangle(
                         new Vertex(j + width, -y, k       ),
                         new Vertex(j        , -y, k       ),
@@ -270,7 +475,7 @@ public class Bridge extends Model {
                         new Vertex(-x, i         , k + thick),
                         Color.red) );
                     
-                     triangles.add( new Triangle(
+                    triangles.add( new Triangle(
                         new Vertex(j        , i + height, z),
                         new Vertex(j        , i         , z),
                         new Vertex(j + width, i         , z),
