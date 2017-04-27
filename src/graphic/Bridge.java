@@ -33,6 +33,8 @@ public class Bridge extends Model {
     double holeBalkHeight = 5;
     double bindingHeight = 5;
     double bindingWidth = 5;
+    double fanceDistance = 1;
+    double fanceParam = 0.2;
     int countThirdHole = 2;
     
     
@@ -55,12 +57,8 @@ public class Bridge extends Model {
         createInclineSupport();
     
         createBinding();
-   /*  triangles.addAll( getRotateTriangle(supportWidth, bindingHeight, supportThick,
-                - (lowerSupportWidth / 2.5 - supportWidth) + supportWidth / 2, 
-                -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2), 
-                bridgeLength / 2, 0, 45, 0) );
-    */
-      createRope();
+        createRope();
+        createFance();
     }
     
     private void createRope(){
@@ -83,14 +81,14 @@ public class Bridge extends Model {
             distance = bridgeLength / 6; 
         else if(count > 0)
             distance = (bridgeLength / 2 - bridgeLength / 5) / count;   
-        System.out.println("distance " + distance);
+       // System.out.println("distance " + distance);
         double allDistance = -bridgeLength / 2 + distance;
         double t = 0;
         double heightBalk = 0;
         while(t <= 1) {
             z = (1-t) * (1-t) * p1X + 2 * t * (1-t) * p2X + t * t + p3X; 
             y = (1-t) * (1-t) * p1Y + 2 * t * (1-t) * p2Y + t * t + p3Y; 
-            System.out.println("z " + z + " y " + y + " bridgeLevel " + bridgeLevel);
+          //  System.out.println("z " + z + " y " + y + " bridgeLevel " + bridgeLevel);
             
             if (currentCount < count && z > allDistance) {
                 heightBalk = -(y + bridgeLevel + bridgeHeight);
@@ -229,24 +227,9 @@ public class Bridge extends Model {
         
         return triangles;
     }
-    private void createCircleMetal(){
-        List<Triangle> trs = new ArrayList<Triangle>();
-        for(int i = 0; i < 100; i++){
-            trs = ( createRectangleWorld(1, 1, 50, 200 - (double)i / 10, (double)i / 10 , -bridgeLength / 2) );
-           
-        
-         Matrix3 transform = Matrix3.getRotate(0, 0, (double)i / 100.0).multiply(Matrix3.getWorld(-(double)i/10.0 , (double)i/10.0 , -bridgeLength / 2));
-         for(Triangle t : trs){
-                Vertex v1 = transform.transform(t.v1);
-                Vertex v2 = transform.transform(t.v2);
-                Vertex v3 = transform.transform(t.v3);
-                triangles.add( new Triangle(v1, v2, v3, Color.BLACK) );
-            }
-        }
-    }
     
     private void createHole(){
-        double height = -(lowerSupportHeight/2 + bridgeLevel + bridgeHeight + firstHoleHeight);
+        double height = -(lowerSupportHeight / 2 + bridgeLevel + bridgeHeight + firstHoleHeight);
         triangles.addAll( createRectangleWorld(lowerSupportWidth / 5 + supportWidth / 2, holeBalkHeight, lowerSupportThick,
                 0, height, -bridgeLength / 2) );
         triangles.addAll( createRectangleWorld(lowerSupportWidth / 5 + supportWidth / 2, holeBalkHeight, lowerSupportThick,
@@ -261,8 +244,6 @@ public class Bridge extends Model {
         double needHeight = height - holeBalkHeight * (countThirdHole - 1) - countThirdHole * thirdHoleHeight;
         int i = 0;
         
-        System.out.println(height + " :h " + needHeight + " :nh");
-        
         while(i < countThirdHole &&  needHeight > -supportHeight){
             height -= (holeBalkHeight + thirdHoleHeight);
                     System.out.println(height + " :h");
@@ -271,6 +252,20 @@ public class Bridge extends Model {
             triangles.addAll( createRectangleWorld(lowerSupportWidth / 5 + supportWidth / 2, holeBalkHeight, lowerSupportThick,
                 0, height, bridgeLength / 2) );
             i++;
+        }
+    }
+    
+    private void createFance(){
+        double x = bridgeWidth / 2;
+        double y = -(lowerSupportHeight + bridgeLevel - bridgeHeight / 2) + fanceParam / 2;
+        double step = fanceDistance;
+        double heightFance = -(y - (y  + fanceParam/2 + bridgeHeight + bridgeHeight / 2 ) ); 
+        System.out.println("height: " + heightFance);
+        triangles.addAll( createRectangleWorld(fanceParam, fanceParam, bridgeLength, x , y, 0) );
+        triangles.addAll( createRectangleWorld(fanceParam, fanceParam, bridgeLength, -x , y, 0) );
+        for(double i = -bridgeLength / 2; i < bridgeLength / 2; i += step){
+            triangles.addAll( createRectangleWorld(fanceParam, heightFance, fanceParam, x , y + heightFance / 2, i) );
+            triangles.addAll( createRectangleWorld(fanceParam, heightFance, fanceParam, -x , y + heightFance / 2, i) );
         }
     }
     
@@ -284,6 +279,7 @@ public class Bridge extends Model {
                 x = bridgeWidth / 2 - i * (bridgeWidth - metalWidth);
                 y = -(lowerSupportHeight/2 + bridgeLevel - bridgeHeight / 2);
                 z =  -bridgeLength / 2 + supportThick / 2 + metalThick / 2 + j * metalThick;
+  //              triangles.addAll( createRectangleWorld(fanceParam, fanceParam, fanceParam, x, y  - bridgeHeight - 1, z) );
                 triangles.addAll( createRectangleWorld(metalWidth / 5, metalHeight / 5, metalThick, x, y, z) );
                 triangles.addAll( createRectangleWorld(metalWidth / 5, metalHeight / 5, metalThick, x - metalThick, y, z) );
                 triangles.addAll( createRectangleWorld(metalWidth / 5, metalHeight / 5, metalThick, x, y + metalHeight, z) );
@@ -495,7 +491,7 @@ public class Bridge extends Model {
                         new Vertex(j        , i + height, -z),
                         new Vertex(j + width, i         , -z),
                         Color.white) );
-                    System.out.println("ffff");
+                  //  System.out.println("ffff");
                 }
             
             return triangles;
