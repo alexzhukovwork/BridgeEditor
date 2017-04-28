@@ -50,7 +50,13 @@ public class Render {
                     System.out.println(te);
                     continue;
                 }
-              */  Vertex v1 = transform.transform(t.v1);
+                
+              */
+            double d = 200;
+            Vertex v1 = transform.transform(t.v1);
+             // Vertex v1 = t.v1;
+          //  v1.x *=  d / v1.z;
+              //v1.y *= d / v1.z;
              /*   double d1 = 600.0 * Math.tan(Math.toRadians(90/ 2)) / 2;
                 double d2 = 300.0 * Math.tan(Math.toRadians(90 / 2))/ 2;
                 
@@ -60,10 +66,16 @@ public class Render {
                 v1.y = beta - beta * v1.y;//(d2 * v1.y  * 2/ v1.z);
                 */
                 Vertex v2 = transform.transform(t.v2);
+               // Vertex v2 = t.v2;
+              // v2.x *= d / v2.z;
+             // v2.y *= d / v2.z;
                /* v2.x = alpha + alpha * v2.x;//(d1 * v2.x / v2.z);
                 v2.y = beta - beta * v2.y;//(d2 * v2.y  * 2/ v2.z);
 */
                 Vertex v3 = transform.transform(t.v3);
+               // Vertex v3 = t.v3;
+              // v3.x *= d / v3.z;
+             // v3.y *= d / v3.z;
   /*              v3.x = alpha + alpha * v3.x;//(d1 * v3.x / v3.z);
                 v3.y = beta - beta * v3.y;//(d2 * v3.y  * 2/ v3.z);
     */            

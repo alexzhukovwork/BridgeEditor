@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface Coordinats {
     public void setTriangle(List<Triangle> triangles);
+    
 }
