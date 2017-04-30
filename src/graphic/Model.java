@@ -6,6 +6,7 @@
 package graphic;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,18 +14,24 @@ import java.util.List;
  *
  * @author Алексей
  */
-public class Model implements Coordinats{
+public class Model implements Coordinats, Serializable{
+    private String name;
     public List<Triangle> triangles = new ArrayList<>();
     public double worldX, worldY, worldZ;
     public double angleX, angleY, angleZ;
     public double dx, dy, dz;
     
-    public Model(double worldX, double worldY, double worldZ){
+    public Model(double worldX, double worldY, double worldZ, String name){
+        this.name = name;
         angleX = angleY = angleZ = 0;
         dx = dy = dz = 1;
         this.worldX = worldX;
         this.worldY = worldY;
         this.worldZ = worldZ;
+    }
+    
+    public String getName(){
+        return name;
     }
     
     public List<Triangle> getMatrix(){

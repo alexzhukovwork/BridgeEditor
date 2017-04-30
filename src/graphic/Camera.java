@@ -5,6 +5,7 @@
  */
 package graphic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author Алексей
  */
-public class Camera implements Coordinats{
+public class Camera implements Coordinats, Serializable{
     public double x, y, z;
     public double d;
     public double angleX, angleY, angleZ;

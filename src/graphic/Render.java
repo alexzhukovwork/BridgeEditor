@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
  *
  * @author Алексей
  */
-public class Render {
+public class Render implements Serializable {
      public static Graphics2D g2;
      public static BufferedImage getImage(List<Model> models, int height, int width, Camera camera){
         

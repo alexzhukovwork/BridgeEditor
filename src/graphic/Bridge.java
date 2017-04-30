@@ -39,8 +39,8 @@ public class Bridge extends Model {
     int countRope = 0;
     
     
-    public Bridge(double worldX, double worldY, double worldZ) {
-        super(worldX, worldY, worldZ);
+    public Bridge(double worldX, double worldY, double worldZ, String name) {
+        super(worldX, worldY, worldZ, name);
     }
     
     public void createModel(){

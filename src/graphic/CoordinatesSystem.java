@@ -11,8 +11,8 @@ package graphic;
  */
 public class CoordinatesSystem extends Model{
     
-    public CoordinatesSystem(double worldX, double worldY, double worldZ) {
-        super(worldX, worldY, worldZ);
+    public CoordinatesSystem(double worldX, double worldY, double worldZ, String name) {
+        super(worldX, worldY, worldZ, name);
         createModel();
     }
     

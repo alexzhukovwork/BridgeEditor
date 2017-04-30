@@ -5,11 +5,13 @@
  */
 package graphic;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Алексей
  */
-public class Vertex {
+public class Vertex implements Serializable {
      double x;
     double y;
     double z;

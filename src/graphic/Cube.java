@@ -13,8 +13,8 @@ import java.awt.Color;
  */
 public class Cube extends Model{
     
-    public Cube(double worldX, double worldY, double worldZ) {
-        super(worldX, worldY, worldZ);
+    public Cube(double worldX, double worldY, double worldZ, String name) {
+        super(worldX, worldY, worldZ, name);
         createModel();
     }
     

@@ -19,6 +19,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -27,9 +34,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.stage.FileChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
@@ -40,7 +50,7 @@ import javax.swing.text.NumberFormatter;
  *
  * @author Алексей
  */
-public class GeneralFrame extends javax.swing.JFrame {
+public class GeneralFrame extends javax.swing.JFrame implements Serializable{
 
     /**
      * Creates new form GeneralFrame
@@ -66,11 +76,11 @@ public class GeneralFrame extends javax.swing.JFrame {
         camera.width = 600;
         camera.height = 300;   
         jSelectModel.removeAllItems();
-        Bridge b = new Bridge(200, 200, 200);
+        Bridge b = new Bridge(200, 200, 200, "Мост" + models.size());
         b.createModel();
         models.add( b );
-        jSelectModel.addItem("Мост" + number);
-        number++;
+        jSelectModel.addItem(b.getName());
+
         
     }
     
@@ -89,7 +99,7 @@ public class GeneralFrame extends javax.swing.JFrame {
     }
     
     private void initEdits() throws ParseException{
-        Bridge bridge = new Bridge(0, 0, 0);
+        Bridge bridge = new Bridge(0, 0, 0, "Bridge" + models.size());
         
        // lowerSupportWidth.setColumns(10);
        /* lowerSupportWidth.setValue(bridge.lowerSupportWidth);
@@ -196,6 +206,8 @@ public class GeneralFrame extends javax.swing.JFrame {
         jSelectModel = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
+        jSaveScene = new javax.swing.JMenuItem();
+        jLoadScene = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
         jInternalFrame1.setVisible(true);
@@ -592,7 +604,24 @@ public class GeneralFrame extends javax.swing.JFrame {
 
         jSelectModel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jMenu2.setText("File");
+        jMenu2.setText("Файл");
+
+        jSaveScene.setText("Сохранить сцену");
+        jSaveScene.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jSaveSceneActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jSaveScene);
+
+        jLoadScene.setText("Загрузить сцену");
+        jLoadScene.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jLoadSceneActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jLoadScene);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Edit");
@@ -635,13 +664,13 @@ public class GeneralFrame extends javax.swing.JFrame {
         double worldX = Double.parseDouble(eWorldX.getText());
         double worldY = Double.parseDouble(eWorldY.getText());
         double worldZ = Double.parseDouble(eWorldZ.getText());
-        Bridge bridge = new Bridge(worldX, worldY, worldZ);
+        Bridge bridge = new Bridge(worldX, worldY, worldZ, "Мост" + models.size());
         models.add(bridge);
         setModelParam(models.size() - 1);
         ( (Bridge)models.get(models.size() - 1) ).createModel();
-        jSelectModel.addItem("Мост" + number);
+        jSelectModel.addItem(bridge.getName());
         jSelectModel.setSelectedIndex( models.size() - 1 );
-        number++;
+
         workPanel.repaint();
         workPanel.requestFocus(true);
         workPanel.requestFocus();
@@ -654,6 +683,48 @@ public class GeneralFrame extends javax.swing.JFrame {
             workPanel.repaint();
         }
     }//GEN-LAST:event_bChangeModelActionPerformed
+
+    private void jSaveSceneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSaveSceneActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Сохранение файла");
+
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int result = fileChooser.showSaveDialog(new JFileChooser());
+
+        if (result == JFileChooser.APPROVE_OPTION ){
+            try {
+                serialize( fileChooser.getSelectedFile().getPath() );
+                System.out.println(fileChooser.getSelectedFile().getPath());
+                JOptionPane.showMessageDialog(this, 
+                              "Файл '" + fileChooser.getSelectedFile() + 
+                              " сохранен");
+            } catch (IOException ex) {
+                Logger.getLogger(GeneralFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jSaveSceneActionPerformed
+
+    private void jLoadSceneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoadSceneActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Сохранение файла");
+
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int result = fileChooser.showOpenDialog(new JFileChooser());
+
+        if (result == JFileChooser.APPROVE_OPTION ){
+            try {
+                unserialize( fileChooser.getSelectedFile().getPath() );
+                System.out.println(fileChooser.getSelectedFile().getPath());
+                JOptionPane.showMessageDialog(this, 
+                              "Файл '" + fileChooser.getSelectedFile() + 
+                              " сохранен");
+            } catch (IOException ex) {
+                Logger.getLogger(GeneralFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(GeneralFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jLoadSceneActionPerformed
 
     private void getModelParam(int number){
         eWorldX.setValue( models.get(number).worldX );
@@ -745,12 +816,12 @@ public class GeneralFrame extends javax.swing.JFrame {
         this.addKeyListener(new KeyListener(){
             @Override
             public void keyTyped(KeyEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+               
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
-                //System.out.println(e.getKeyCode());
+
                 switch (e.getKeyCode()) {
                     case 68:
                         model.worldX += 1;
@@ -829,7 +900,6 @@ public class GeneralFrame extends javax.swing.JFrame {
             @Override
             public void keyReleased(KeyEvent e) {
                 
-// throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
         JFrame jFrame = this;
@@ -842,25 +912,54 @@ public class GeneralFrame extends javax.swing.JFrame {
 
             @Override
             public void mousePressed(MouseEvent e) {
-              //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-               // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                
             }
             
         });
+    }
+    
+    private void serialize(String name) throws FileNotFoundException, IOException{
+        FileOutputStream fos = new FileOutputStream(name);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeInt( models.size() );
+        for(Model m : models)
+            oos.writeObject(m);
+        oos.writeObject(camera);
+        oos.flush();
+        oos.close();
+    }
+    
+    private void setListBox(){
+        jSelectModel.removeAllItems();
+        for(Model m : models)
+            jSelectModel.addItem(m.getName());
+    }
+    
+    private void unserialize(String name) throws FileNotFoundException, IOException, ClassNotFoundException{
+        FileInputStream fis = new FileInputStream(name);
+        ObjectInputStream oin = new ObjectInputStream(fis);
+        models.clear();
+        int count = oin.readInt();
+        for(int i = 0; i < count; i++)
+            models.add( (Model)oin.readObject() );
+        camera = (Camera)oin.readObject();
+        setListBox();
+        workPanel.repaint();
     }
     
     private void setCameraEdit(){
@@ -968,12 +1067,14 @@ public class GeneralFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuItem jLoadScene;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JMenuItem jSaveScene;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JComboBox<String> jSelectModel;

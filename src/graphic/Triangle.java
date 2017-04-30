@@ -6,12 +6,13 @@
 package graphic;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 /**
  *
  * @author Алексей
  */
-public class Triangle {
+public class Triangle implements Serializable{
     Vertex v1;
     Vertex v2;
     Vertex v3;
