@@ -36,14 +36,15 @@ public class Bridge extends Model {
     double fanceDistance = 1;
     double fanceParam = 0.2;
     int countThirdHole = 2;
+    int countRope = 0;
     
     
     public Bridge(double worldX, double worldY, double worldZ) {
         super(worldX, worldY, worldZ);
-        createModel();
     }
     
     public void createModel(){
+        triangles.clear();
         triangles.addAll( createRectangleWorld(lowerSupportWidth, lowerSupportHeight, lowerSupportThick, 0, 0, -bridgeLength / 2) );
         triangles.addAll( createRectangleWorld(lowerSupportWidth, lowerSupportHeight, lowerSupportThick, 0, 0, bridgeLength / 2) );
         triangles.addAll( createRectangleWorld(supportWidth, supportHeight, supportThick, 
@@ -73,14 +74,13 @@ public class Bridge extends Model {
         
         double p2X =  -bridgeLength / 2 + supportThick / 2; 
         double p2Y = supportHeight*2 - 2*bridgeLevel + lowerSupportHeight;
-        
-        int count = 10;
+       
         int currentCount = 0;
         double distance = 0;
-        if(count == 1)
+        if(countRope == 1)
             distance = bridgeLength / 6; 
-        else if(count > 0)
-            distance = (bridgeLength / 2 - bridgeLength / 5) / count;   
+        else if(countRope > 0)
+            distance = (bridgeLength / 2 - bridgeLength / 5) / countRope;   
        // System.out.println("distance " + distance);
         double allDistance = -bridgeLength / 2 + distance;
         double t = 0;
@@ -90,7 +90,7 @@ public class Bridge extends Model {
             y = (1-t) * (1-t) * p1Y + 2 * t * (1-t) * p2Y + t * t + p3Y; 
           //  System.out.println("z " + z + " y " + y + " bridgeLevel " + bridgeLevel);
             
-            if (currentCount < count && z > allDistance) {
+            if (currentCount < countRope && z > allDistance) {
                 heightBalk = -(y + bridgeLevel + bridgeHeight);
 
                 triangles.addAll( createRectangleWorld(1, heightBalk, 1, -(lowerSupportWidth / 5 + supportWidth / 2) + 1, y + heightBalk / 2, z) );
@@ -230,15 +230,15 @@ public class Bridge extends Model {
     
     private void createHole(){
         double height = -(lowerSupportHeight / 2 + bridgeLevel + bridgeHeight + firstHoleHeight);
-        triangles.addAll( createRectangleWorld(lowerSupportWidth / 5 + supportWidth / 2, holeBalkHeight, lowerSupportThick,
+        triangles.addAll( createRectangleWorld(lowerSupportWidth / 2.5, holeBalkHeight, lowerSupportThick,
                 0, height, -bridgeLength / 2) );
-        triangles.addAll( createRectangleWorld(lowerSupportWidth / 5 + supportWidth / 2, holeBalkHeight, lowerSupportThick,
+        triangles.addAll( createRectangleWorld(lowerSupportWidth / 2.5, holeBalkHeight, lowerSupportThick,
                 0, height, bridgeLength / 2) );
         
         height -= (holeBalkHeight  + secondHoleHeight);        
-        triangles.addAll( createRectangleWorld(lowerSupportWidth / 5 + supportWidth / 2, holeBalkHeight, lowerSupportThick,
+        triangles.addAll( createRectangleWorld(lowerSupportWidth / 2.5, holeBalkHeight, lowerSupportThick,
                 0, height, -bridgeLength / 2) );
-        triangles.addAll( createRectangleWorld(lowerSupportWidth / 5 + supportWidth / 2, holeBalkHeight, lowerSupportThick,
+        triangles.addAll( createRectangleWorld(lowerSupportWidth / 2.5, holeBalkHeight, lowerSupportThick,
                 0, height, bridgeLength / 2) );
         
         double needHeight = height - holeBalkHeight * (countThirdHole - 1) - countThirdHole * thirdHoleHeight;
@@ -247,9 +247,9 @@ public class Bridge extends Model {
         while(i < countThirdHole &&  needHeight > -supportHeight){
             height -= (holeBalkHeight + thirdHoleHeight);
                     System.out.println(height + " :h");
-            triangles.addAll( createRectangleWorld(lowerSupportWidth / 5 + supportWidth / 2, holeBalkHeight, lowerSupportThick,
+            triangles.addAll( createRectangleWorld(lowerSupportWidth / 2.5, holeBalkHeight, lowerSupportThick,
                 0, height, -bridgeLength / 2) );
-            triangles.addAll( createRectangleWorld(lowerSupportWidth / 5 + supportWidth / 2, holeBalkHeight, lowerSupportThick,
+            triangles.addAll( createRectangleWorld(lowerSupportWidth / 2.5, holeBalkHeight, lowerSupportThick,
                 0, height, bridgeLength / 2) );
             i++;
         }

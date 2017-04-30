@@ -15,9 +15,22 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
+
 
 /**
  *
@@ -32,16 +45,47 @@ public class GeneralFrame extends javax.swing.JFrame {
     private List<Model> models = new ArrayList<>();
     private int number = 0;
     private Camera camera;
+    private final NumberFormat numberMask;
     
     
     public GeneralFrame() {
+        numberMask = new DecimalFormat(); 
+        numberMask.setMaximumIntegerDigits(4);
+        numberMask.setMinimumIntegerDigits(0);
         initComponents();
+        
         setPaint();
         setKeyListener();
         camera = new Camera();
         camera.d = 100;
         camera.width = 600;
-        camera.height = 300;        
+        camera.height = 300;     
+        number++;
+        Bridge b = new Bridge(200, 200, 200);
+        b.createModel();
+        models.add( b );
+    }
+    
+    private void initEdits() throws ParseException{
+        Bridge bridge = new Bridge(0, 0, 0);
+        
+       // lowerSupportWidth.setColumns(10);
+       /* lowerSupportWidth.setValue(bridge.lowerSupportWidth);
+        AbstractFormatter number = new NumberFormatter( new DecimalFormat("##0.###") );
+        ((NumberFormatter)number).setValueClass(Double.class);
+        lowerSupportWidth.setFormatterFactory(new DefaultFormatterFactory(number));
+       */
+       
+        DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+        dfs.setGroupingSeparator(',');
+        AbstractFormatter displayFormatter = new NumberFormatter(new DecimalFormat("#,###", dfs));
+        ((NumberFormatter)displayFormatter).setValueClass(Double.class);
+        AbstractFormatter editFormatter = new NumberFormatter(new DecimalFormat("#,###"));
+        ((NumberFormatter)editFormatter).setValueClass(Double.class);
+
+        
+        lowerSupportWidth.setFormatterFactory(new DefaultFormatterFactory(displayFormatter,displayFormatter,editFormatter));
+        lowerSupportWidth.setValue(bridge.lowerSupportWidth);
     }
 
     /**
@@ -56,6 +100,9 @@ public class GeneralFrame extends javax.swing.JFrame {
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jMenu1 = new javax.swing.JMenu();
         jFrame1 = new javax.swing.JFrame();
+        jButton1 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         workPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -83,7 +130,7 @@ public class GeneralFrame extends javax.swing.JFrame {
         bindingHeight = new javax.swing.JFormattedTextField();
         lowerSupportThick = new javax.swing.JFormattedTextField();
         lowerSupportHeight = new javax.swing.JFormattedTextField();
-        lowerSupportWidth = new javax.swing.JFormattedTextField();
+        lowerSupportWidth = new JFormattedTextField(new NumberFormatter(numberMask)); ;
         metalWidth = new javax.swing.JFormattedTextField();
         metalHeight = new javax.swing.JFormattedTextField();
         bridgeLength = new javax.swing.JFormattedTextField();
@@ -91,6 +138,15 @@ public class GeneralFrame extends javax.swing.JFrame {
         bridgeLevel = new javax.swing.JFormattedTextField();
         countRope = new javax.swing.JFormattedTextField();
         countHole = new javax.swing.JFormattedTextField();
+        bCreateModel = new javax.swing.JToggleButton();
+        bChangeModel = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        eWorldX = new javax.swing.JFormattedTextField();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        eWorldY = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        eWorldZ = new javax.swing.JFormattedTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
@@ -121,6 +177,12 @@ public class GeneralFrame extends javax.swing.JFrame {
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
+
+        jButton1.setText("jButton1");
+
+        jTextField1.setText("jTextField1");
+
+        jTextField2.setText("jTextField2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -173,14 +235,55 @@ public class GeneralFrame extends javax.swing.JFrame {
             }
         });
 
+        bCreateModel.setText("Создать");
+        bCreateModel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCreateModelActionPerformed(evt);
+            }
+        });
+
+        bChangeModel.setText("Изменить");
+        bChangeModel.setMaximumSize(new java.awt.Dimension(75, 23));
+        bChangeModel.setMinimumSize(new java.awt.Dimension(75, 23));
+        bChangeModel.setPreferredSize(new java.awt.Dimension(75, 23));
+        bChangeModel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bChangeModelActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setText("Позиция на сцене");
+
+        jLabel18.setText("X");
+
+        jLabel19.setText("Y");
+
+        jLabel20.setText("Z");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(eWorldX, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel17))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eWorldY, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eWorldZ, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -189,7 +292,7 @@ public class GeneralFrame extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lowerSupportThick, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(bindingHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,32 +301,37 @@ public class GeneralFrame extends javax.swing.JFrame {
                             .addComponent(firstHoleHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(supportHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(supportThick, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(metalWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lowerSupportHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lowerSupportWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(countHole, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(countRope, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bridgeLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bridgeWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(metalHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bridgeLength, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                            .addComponent(bChangeModel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(bCreateModel, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(countHole, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(countRope, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(bridgeLevel, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(bridgeWidth, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(bridgeLength, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(metalHeight))))))
                 .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
@@ -293,7 +401,21 @@ public class GeneralFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
                     .addComponent(countHole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(eWorldX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel19)
+                    .addComponent(eWorldY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20)
+                    .addComponent(eWorldZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bCreateModel)
+                    .addComponent(bChangeModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -321,10 +443,9 @@ public class GeneralFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(workPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
         );
 
         pack();
@@ -334,6 +455,66 @@ public class GeneralFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_supportThickActionPerformed
 
+    private void bCreateModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCreateModelActionPerformed
+        double worldX = Double.parseDouble(eWorldX.getText());
+        double worldY = Double.parseDouble(eWorldY.getText());
+        double worldZ = Double.parseDouble(eWorldZ.getText());
+        Bridge bridge = new Bridge(worldX, worldY, worldZ);
+        models.add(bridge);
+        setModelParam(models.size() - 1);
+        ( (Bridge)models.get(models.size() - 1) ).createModel();
+        number++;
+        workPanel.repaint();
+        workPanel.requestFocus(true);
+        workPanel.requestFocus();
+    }//GEN-LAST:event_bCreateModelActionPerformed
+
+    private void bChangeModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bChangeModelActionPerformed
+        if( !models.isEmpty() ){
+            setModelParam(number % models.size());
+            ( (Bridge)model ).createModel();
+            workPanel.repaint();
+        }
+    }//GEN-LAST:event_bChangeModelActionPerformed
+
+    private void getModelParam(int number){
+        bridgeLength.setValue( ( (Bridge)models.get(number) ).bridgeLength );
+        bridgeLevel.setValue( ( (Bridge)models.get(number) ).bridgeLevel );
+        bridgeWidth.setValue( ( (Bridge)models.get(number) ).bridgeWidth );
+        supportHeight.setValue( ( (Bridge)models.get(number) ).supportHeight );
+        supportThick.setValue( ( (Bridge)models.get(number) ).supportThick );
+        lowerSupportHeight.setValue( ( (Bridge)models.get(number) ).lowerSupportHeight );
+        lowerSupportThick.setValue( ( (Bridge)models.get(number) ).lowerSupportThick );
+        lowerSupportWidth.setValue( ( (Bridge)models.get(number) ).lowerSupportWidth );
+        firstHoleHeight.setValue( ( (Bridge)models.get(number) ).firstHoleHeight );
+        secondHoleHeight.setValue( ( (Bridge)models.get(number) ).secondHoleHeight );
+        thirdHoleHeight.setValue( ( (Bridge)models.get(number) ).thirdHoleHeight );
+        bindingHeight.setValue( ( (Bridge)models.get(number) ).bindingHeight );
+        metalHeight.setValue( ( (Bridge)models.get(number) ).metalHeight );
+        metalWidth.setValue( ( (Bridge)models.get(number) ).metalWidth );
+        countHole.setValue( ( (Bridge)models.get(number) ).countThirdHole );
+        countRope.setValue( ( (Bridge)models.get(number) ).countRope );
+    }
+    
+    private void setModelParam(int number){
+        ( (Bridge)models.get(number) ).bridgeLength = Double.parseDouble( bridgeLength.getText() );
+        ( (Bridge)models.get(number) ).bridgeLevel = Double.parseDouble( bridgeLevel.getText() );
+        ( (Bridge)models.get(number) ).bridgeWidth = Double.parseDouble( bridgeWidth.getText() );
+        ( (Bridge)models.get(number) ).supportHeight = Double.parseDouble( supportHeight.getText() );
+        ( (Bridge)models.get(number) ).supportThick = Double.parseDouble( supportThick.getText() );
+        ( (Bridge)models.get(number) ).lowerSupportHeight = Double.parseDouble( lowerSupportHeight.getText() );
+        ( (Bridge)models.get(number) ).lowerSupportThick = Double.parseDouble( lowerSupportThick.getText() );
+        ( (Bridge)models.get(number) ).lowerSupportWidth = Double.parseDouble( lowerSupportWidth.getText() );
+        ( (Bridge)models.get(number) ).firstHoleHeight = Double.parseDouble( firstHoleHeight.getText() );
+        ( (Bridge)models.get(number) ).secondHoleHeight = Double.parseDouble( secondHoleHeight.getText() );
+        ( (Bridge)models.get(number) ).thirdHoleHeight = Double.parseDouble( thirdHoleHeight.getText() );
+        ( (Bridge)models.get(number) ).bindingHeight = Double.parseDouble( bindingHeight.getText() );
+        ( (Bridge)models.get(number) ).metalHeight = Double.parseDouble( metalHeight.getText() );
+        ( (Bridge)models.get(number) ).metalWidth = Double.parseDouble( metalWidth.getText() );
+        ( (Bridge)models.get(number) ).countThirdHole = Integer.parseInt( countHole.getText() );
+        ( (Bridge)models.get(number) ).countRope = Integer.parseInt( countRope.getText() );
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -383,6 +564,7 @@ public class GeneralFrame extends javax.swing.JFrame {
                 switch (e.getKeyCode()) {
                     case 49:
                         model = models.get(number % models.size());
+                        getModelParam(number % models.size() );
                         number++;
                         break;
                     case 68:
@@ -465,12 +647,11 @@ public class GeneralFrame extends javax.swing.JFrame {
 // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-        
+        JFrame jFrame = this;
         workPanel.addMouseListener(new MouseListener(){
             @Override
             public void mouseClicked(MouseEvent e) {
-                Vertex v = camera.getCam().transform(new Vertex(e.getX(), e.getY(), 0.0));
-                models.add(new Bridge(v.x, v.y, v.z));
+                jFrame.requestFocus();
                 workPanel.repaint();
             }
 
@@ -523,13 +704,19 @@ public class GeneralFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bChangeModel;
+    private javax.swing.JToggleButton bCreateModel;
     private javax.swing.JFormattedTextField bindingHeight;
     private javax.swing.JFormattedTextField bridgeLength;
     private javax.swing.JFormattedTextField bridgeLevel;
     private javax.swing.JFormattedTextField bridgeWidth;
     private javax.swing.JFormattedTextField countHole;
     private javax.swing.JFormattedTextField countRope;
+    private javax.swing.JFormattedTextField eWorldX;
+    private javax.swing.JTextField eWorldY;
+    private javax.swing.JFormattedTextField eWorldZ;
     private javax.swing.JFormattedTextField firstHoleHeight;
+    private javax.swing.JButton jButton1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
@@ -540,7 +727,11 @@ public class GeneralFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -555,6 +746,8 @@ public class GeneralFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JFormattedTextField lowerSupportHeight;
     private javax.swing.JFormattedTextField lowerSupportThick;
     private javax.swing.JFormattedTextField lowerSupportWidth;
