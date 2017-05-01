@@ -73,7 +73,7 @@ public class Bridge extends Model {
         double p1Y = 0;
         
         double p2X =  -bridgeLength / 2 + supportThick / 2; 
-        double p2Y = supportHeight*2 - 2*bridgeLevel + lowerSupportHeight;
+        double p2Y = (supportHeight - bridgeLevel + bindingHeight) * 2;
        
         int currentCount = 0;
         double distance = 0;
@@ -88,7 +88,7 @@ public class Bridge extends Model {
         while(t <= 1) {
             z = (1-t) * (1-t) * p1X + 2 * t * (1-t) * p2X + t * t + p3X; 
             y = (1-t) * (1-t) * p1Y + 2 * t * (1-t) * p2Y + t * t + p3Y; 
-          //  System.out.println("z " + z + " y " + y + " bridgeLevel " + bridgeLevel);
+
             
             if (currentCount < countRope && z > allDistance) {
                 heightBalk = -(y + bridgeLevel + bridgeHeight);
@@ -169,49 +169,151 @@ public class Bridge extends Model {
     }
     
     private void createInclineSupport(){
-        double cat1 = (bridgeLevel / 2) / 1.3;
-        double cat2 = (lowerSupportWidth / 2.5 - supportWidth);// + supportWidth);
+        double cat1 = ( (bridgeLevel - metalHeight/2 - bridgeHeight/2) / 2) - holeBalkHeight - metalHeight/2;
+        double cat2 = (lowerSupportWidth / 2.5) - supportWidth;
+      
         double rot = Math.sqrt(cat1 * cat1 + cat2 * cat2);
+          System.out.println("cat2 " + cat2);
+        System.out.println("cat1 " + cat1);
+        System.out.println("c " + rot);
+        System.out.println("tg  " + Math.asin(cat1 / rot) );
+        double angle = (Math.asin(cat1 / rot));
+        System.out.println("angle " + angle);
         
-        triangles.addAll( getRotate(0, -rot / 2 - lowerSupportHeight / 2, -bridgeLength/2,
-                angleX, angleY, -Math.tan(cat2 / cat1), 
-                1, rot, supportThick) );
-        triangles.addAll( getRotate(0, -rot / 2 - lowerSupportHeight / 2, -bridgeLength/2,
-                angleX, angleY, Math.tan(cat2 / cat1), 
-                1, rot, supportThick) );
-        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3), -bridgeLength/2,
-                0, 0, 0, 
+        Vertex v1 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2, bridgeLength / 2 - supportThick / 2);
+        Vertex v2 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2, bridgeLength / 2 + supportThick / 2);
+        Vertex v3 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 + 2, bridgeLength / 2 + supportThick / 2 );
+        Vertex v4 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 + 2, bridgeLength / 2 - supportThick / 2);
+        Vertex v5 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 4, bridgeLength / 2 - supportThick / 2);
+        Vertex v6 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 4, bridgeLength / 2 + supportThick / 2);
+        Vertex v7 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 6, bridgeLength / 2 + supportThick / 2 );
+        Vertex v8 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 6, bridgeLength / 2 - supportThick / 2);
+        triangles.addAll(createRectangleT(v1, v2, v3, v4, v5, v6, v7, v8));
+        
+        v1 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2, bridgeLength / 2 - supportThick / 2);
+        v2 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2, bridgeLength / 2 + supportThick / 2);
+        v3 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 + 2, bridgeLength / 2 + supportThick / 2 );
+        v4 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 + 2, bridgeLength / 2 - supportThick / 2);
+        v5 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 4, bridgeLength / 2 - supportThick / 2);
+        v6 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 4, bridgeLength / 2 + supportThick / 2);
+        v7 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 6, bridgeLength / 2 + supportThick / 2 );
+        v8 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 6, bridgeLength / 2 - supportThick / 2);
+        triangles.addAll(createRectangleT(v1, v2, v3, v4, v5, v6, v7, v8));
+        
+        v1 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2, -bridgeLength / 2 + supportThick / 2);
+        v2 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2, -bridgeLength / 2 - supportThick / 2);
+        v3 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 + 2, -bridgeLength / 2 - supportThick / 2 );
+        v4 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 + 2, -bridgeLength / 2 + supportThick / 2);
+        v5 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 4, -bridgeLength / 2 + supportThick / 2);
+        v6 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 4, -bridgeLength / 2 - supportThick / 2);
+        v7 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 6, -bridgeLength / 2 - supportThick / 2 );
+        v8 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 6, -bridgeLength / 2 + supportThick / 2);
+        triangles.addAll(createRectangleT(v1, v2, v3, v4, v5, v6, v7, v8));
+        
+        v1 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2, -bridgeLength / 2 + supportThick / 2);
+        v2 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2, -bridgeLength / 2 - supportThick / 2);
+        v3 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 + 2, -bridgeLength / 2 - supportThick / 2 );
+        v4 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 + 2, -bridgeLength / 2 + supportThick / 2);
+        v5 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 4, -bridgeLength / 2 + supportThick / 2);
+        v6 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 4, -bridgeLength / 2 - supportThick / 2);
+        v7 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 6, -bridgeLength / 2 - supportThick / 2 );
+        v8 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 6, -bridgeLength / 2 + supportThick / 2);
+        triangles.addAll(createRectangleT(v1, v2, v3, v4, v5, v6, v7, v8));
+        //
+        v1 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - holeBalkHeight, bridgeLength / 2 - supportThick / 2);
+        v2 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - holeBalkHeight, bridgeLength / 2 + supportThick / 2);
+        v3 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 + 2 - cat1 - holeBalkHeight, bridgeLength / 2 + supportThick / 2 );
+        v4 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 + 2 - cat1 - holeBalkHeight, bridgeLength / 2 - supportThick / 2);
+        v5 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 4 - cat1 - holeBalkHeight, bridgeLength / 2 - supportThick / 2);
+        v6 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 4 - cat1 - holeBalkHeight, bridgeLength / 2 + supportThick / 2);
+        v7 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 6 - cat1 - holeBalkHeight, bridgeLength / 2 + supportThick / 2 );
+        v8 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 6 - cat1 - holeBalkHeight, bridgeLength / 2 - supportThick / 2);
+        triangles.addAll(createRectangleT(v1, v2, v3, v4, v5, v6, v7, v8));
+        
+        v1 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - holeBalkHeight, bridgeLength / 2 - supportThick / 2);
+        v2 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - holeBalkHeight, bridgeLength / 2 + supportThick / 2);
+        v3 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 + 2 - cat1 - holeBalkHeight, bridgeLength / 2 + supportThick / 2 );
+        v4 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 + 2 - cat1 - holeBalkHeight, bridgeLength / 2 - supportThick / 2);
+        v5 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 4 - cat1 - holeBalkHeight, bridgeLength / 2 - supportThick / 2);
+        v6 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 4 - cat1 - holeBalkHeight, bridgeLength / 2 + supportThick / 2);
+        v7 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 6 - cat1 - holeBalkHeight, bridgeLength / 2 + supportThick / 2 );
+        v8 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 6 - cat1 - holeBalkHeight, bridgeLength / 2 - supportThick / 2);
+        triangles.addAll(createRectangleT(v1, v2, v3, v4, v5, v6, v7, v8));
+        
+        v1 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - holeBalkHeight, -bridgeLength / 2 + supportThick / 2);
+        v2 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - holeBalkHeight, -bridgeLength / 2 - supportThick / 2);
+        v3 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - holeBalkHeight + 2, -bridgeLength / 2 - supportThick / 2 );
+        v4 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - holeBalkHeight + 2, -bridgeLength / 2 + supportThick / 2);
+        v5 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2  - cat1 - holeBalkHeight- cat1 - 4, -bridgeLength / 2 + supportThick / 2);
+        v6 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2  - cat1 - holeBalkHeight- cat1 - 4, -bridgeLength / 2 - supportThick / 2);
+        v7 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 6 - cat1 - holeBalkHeight, -bridgeLength / 2 - supportThick / 2 );
+        v8 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - 6 - cat1 - holeBalkHeight, -bridgeLength / 2 + supportThick / 2);
+        triangles.addAll(createRectangleT(v1, v2, v3, v4, v5, v6, v7, v8));
+        
+        v1 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - holeBalkHeight, -bridgeLength / 2 + supportThick / 2);
+        v2 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 - cat1 - holeBalkHeight, -bridgeLength / 2 - supportThick / 2);
+        v3 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 + 2 - cat1 - holeBalkHeight, -bridgeLength / 2 - supportThick / 2 );
+        v4 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2 + 2 - cat1 - holeBalkHeight, -bridgeLength / 2 + supportThick / 2);
+        v5 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 4 - cat1 - holeBalkHeight, -bridgeLength / 2 + supportThick / 2);
+        v6 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 4 - cat1 - holeBalkHeight, -bridgeLength / 2 - supportThick / 2);
+        v7 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 6 - cat1 - holeBalkHeight, -bridgeLength / 2 - supportThick / 2 );
+        v8 = new Vertex(-cat2 / 2 - 1, -lowerSupportHeight/2 - cat1 - 6 - cat1 - holeBalkHeight, -bridgeLength / 2 + supportThick / 2);
+        triangles.addAll(createRectangleT(v1, v2, v3, v4, v5, v6, v7, v8));
+        
+        triangles.addAll( getRotate(0, -lowerSupportHeight / 2 - cat1 - metalHeight, bridgeLength/2,
+               0, 0, 0, 
+                cat2, holeBalkHeight / 2, supportThick) );
+        triangles.addAll( getRotate(0, -lowerSupportHeight / 2 - cat1 - metalHeight, -bridgeLength/2,
+               0, 0, 0, 
+                cat2, holeBalkHeight / 2, supportThick) );
+        triangles.addAll( getRotate(0, -lowerSupportHeight / 2 - cat1 - 2 * metalHeight  - cat1, bridgeLength/2,
+               0, 0, 0, 
+                cat2, holeBalkHeight / 2, supportThick) );
+        triangles.addAll( getRotate(0, -lowerSupportHeight / 2 - cat1 -  2 * metalHeight - cat1, -bridgeLength/2,
+               0, 0, 0, 
                 cat2, holeBalkHeight / 2, supportThick) );
         
-        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + rot/2), -bridgeLength/2,
-                angleX, angleY, -Math.tan(cat2 / cat1), 
-                1, rot, supportThick) );
-        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + rot/2), -bridgeLength/2,
-                angleX, angleY, Math.tan(cat2 / cat1), 
-                1, rot, supportThick) );
-        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + cat1), -bridgeLength/2,
-                0, 0, 0, 
-                cat2, holeBalkHeight / 2, supportThick) );
-        
-        triangles.addAll( getRotate(0, -rot / 2 - lowerSupportHeight / 2, bridgeLength/2,
-                angleX, angleY, -Math.tan(cat2 / cat1), 
-                1, rot, supportThick) );
-        triangles.addAll( getRotate(0, -rot / 2 - lowerSupportHeight / 2, bridgeLength/2,
-                angleX, angleY, Math.tan(cat2 / cat1), 
-                1, rot, supportThick) );
-        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3), bridgeLength/2,
-                0, 0, 0, 
-                cat2, holeBalkHeight / 2, supportThick) );
-        
-        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + rot/2), bridgeLength/2,
-                angleX, angleY, -Math.tan(cat2 / cat1), 
-                1, rot, supportThick) );
-        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + rot/2), bridgeLength/2,
-                angleX, angleY, Math.tan(cat2 / cat1), 
-                1, rot, supportThick) );
-        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + cat1), bridgeLength/2,
-                0, 0, 0, 
-                cat2, holeBalkHeight / 2, supportThick) );
+//        
+//        triangles.addAll( getRotate(-cat2/2, -rot / 2 , -bridgeLength/2,
+//                0, 0, angle, 
+//                1, rot, supportThick,
+//                -cat2/2, -lowerSupportHeight/2, -bridgeLength/2) );
+//        triangles.addAll( getRotate(0, -rot / 2 - lowerSupportHeight / 2, - bridgeLength/2,
+//                0, 0, -angle, 
+//                1, rot, supportThick) );
+//        triangles.addAll( getRotate(0, -lowerSupportHeight / 2 - rot - metalHeight / 2, bridgeLength/2,
+//               0, 0, 0, 
+//                cat2, holeBalkHeight / 2, supportThick) );
+//        
+//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + rot/2), -bridgeLength/2,
+//                0, 0, -Math.tan(cat2 / cat1), 
+//                1, rot, supportThick) );
+//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + rot/2), -bridgeLength/2,
+//                0, 0, Math.tan(cat2 / cat1), 
+//                1, rot, supportThick) );
+//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + cat1), -bridgeLength/2,
+//                0, 0, 0, 
+//                cat2, holeBalkHeight / 2, supportThick) );
+//        
+//        triangles.addAll( getRotate(0, -rot / 2 - lowerSupportHeight / 2, bridgeLength/2,
+//                0, 0, -Math.tan(cat2 / cat1), 
+//                1, rot, supportThick) );
+//        triangles.addAll( getRotate(0, -rot / 2 - lowerSupportHeight / 2, bridgeLength/2,
+//                0, 0, Math.tan(cat2 / cat1), 
+//                1, rot, supportThick) );
+//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3), bridgeLength/2,
+//                0, 0, 0, 
+//                cat2, holeBalkHeight / 2, supportThick) );
+//        
+//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + rot/2), bridgeLength/2,
+//                0, 0, -Math.tan(cat2 / cat1), 
+//                1, rot, supportThick) );
+//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + rot/2), bridgeLength/2,
+//                0, 0, Math.tan(cat2 / cat1), 
+//                1, rot, supportThick) );
+//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + cat1), bridgeLength/2,
+//                0, 0, 0, 
+//                cat2, holeBalkHeight / 2, supportThick) );
     }
     
     private List<Triangle> getRotate(double x, double y, double z, double angleX, double angleY, double angleZ,
@@ -219,6 +321,21 @@ public class Bridge extends Model {
         List<Triangle> triangles = new ArrayList<>();
         triangles = createRectangle(width, height, thick);
         Matrix3 transform = Matrix3.getRotate(angleX, angleY, angleZ).multiply( Matrix3.getWorld(x, y, z) );
+        for(Triangle t : triangles){
+            t.v1 = transform.transform(t.v1);
+            t.v2 = transform.transform(t.v2);
+            t.v3 = transform.transform(t.v3);
+        }
+        
+        return triangles;
+    }
+    
+    private List<Triangle> getRotate(double x, double y, double z, double angleX, double angleY, double angleZ,
+            double width, double height, double thick, double dx, double dy, double dz){
+        List<Triangle> triangles = new ArrayList<>();
+        triangles = createRectangle(width, height, thick);
+        Matrix3 transform = Matrix3.getWorld(dx, dy, dz).multiply( Matrix3.getRotate(angleX, angleY, angleZ) )
+                .multiply(Matrix3.getWorld(-dx, -dy, -dz)).multiply( Matrix3.getWorld(x, y, z) );
         for(Triangle t : triangles){
             t.v1 = transform.transform(t.v1);
             t.v2 = transform.transform(t.v2);
@@ -276,10 +393,9 @@ public class Bridge extends Model {
                 + (metalHeight - metalHeight / 5) * (metalHeight - metalHeight / 5) );
         for(int i = 0; i < 2; i++){
             for(int j = 0; j < count; j++){
-                x = bridgeWidth / 2 - i * (bridgeWidth - metalWidth);
+                x = bridgeWidth / 2 - i * (bridgeWidth - metalThick);
                 y = -(lowerSupportHeight/2 + bridgeLevel - bridgeHeight / 2);
                 z =  -bridgeLength / 2 + supportThick / 2 + metalThick / 2 + j * metalThick;
-  //              triangles.addAll( createRectangleWorld(fanceParam, fanceParam, fanceParam, x, y  - bridgeHeight - 1, z) );
                 triangles.addAll( createRectangleWorld(metalWidth / 5, metalHeight / 5, metalThick, x, y, z) );
                 triangles.addAll( createRectangleWorld(metalWidth / 5, metalHeight / 5, metalThick, x - metalThick, y, z) );
                 triangles.addAll( createRectangleWorld(metalWidth / 5, metalHeight / 5, metalThick, x, y + metalHeight, z) );

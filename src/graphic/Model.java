@@ -227,4 +227,25 @@ public class Model implements Coordinats, Serializable{
                 }
         return triangles; 
     }
+    
+     protected List<Triangle> createRectangleT(Vertex v1, Vertex v2, Vertex v3, Vertex v4,
+             Vertex v5, Vertex v6, Vertex v7, Vertex v8){
+      
+        
+        List <Triangle> triangles = new ArrayList<Triangle>();
+        triangles.add( new Triangle(v1, v3, v4, Color.red) );
+        triangles.add( new Triangle(v2, v1, v3, Color.red) );
+        triangles.add( new Triangle(v5, v7, v8, Color.red) );
+        triangles.add( new Triangle(v6, v5, v7, Color.red) );
+        triangles.add( new Triangle(v1, v5, v8, Color.white) );
+        triangles.add( new Triangle(v4, v1, v8, Color.white) );
+        triangles.add( new Triangle(v2, v6, v7, Color.white) );
+        triangles.add( new Triangle(v2, v3, v7, Color.white) );
+        triangles.add( new Triangle(v1, v5, v6, Color.black) );
+        triangles.add( new Triangle(v2, v1, v6, Color.black) );
+        triangles.add( new Triangle(v4, v7, v3, Color.black) );
+        triangles.add( new Triangle(v4, v8, v7, Color.black) );            
+                    
+        return triangles; 
+    }
 }

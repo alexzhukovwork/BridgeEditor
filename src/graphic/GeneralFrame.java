@@ -93,31 +93,8 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                     getModelParam( jSelectModel.getSelectedIndex() );
                     workPanel.repaint();
                 }
-
             }
         });
-    }
-    
-    private void initEdits() throws ParseException{
-        Bridge bridge = new Bridge(0, 0, 0, "Bridge" + models.size());
-        
-       // lowerSupportWidth.setColumns(10);
-       /* lowerSupportWidth.setValue(bridge.lowerSupportWidth);
-        AbstractFormatter number = new NumberFormatter( new DecimalFormat("##0.###") );
-        ((NumberFormatter)number).setValueClass(Double.class);
-        lowerSupportWidth.setFormatterFactory(new DefaultFormatterFactory(number));
-       */
-       
-        DecimalFormatSymbols dfs = new DecimalFormatSymbols();
-        dfs.setGroupingSeparator(',');
-        AbstractFormatter displayFormatter = new NumberFormatter(new DecimalFormat("#,###", dfs));
-        ((NumberFormatter)displayFormatter).setValueClass(Double.class);
-        AbstractFormatter editFormatter = new NumberFormatter(new DecimalFormat("#,###"));
-        ((NumberFormatter)editFormatter).setValueClass(Double.class);
-
-        
-        lowerSupportWidth.setFormatterFactory(new DefaultFormatterFactory(displayFormatter,displayFormatter,editFormatter));
-        lowerSupportWidth.setValue(bridge.lowerSupportWidth);
     }
 
     /**
@@ -660,6 +637,10 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         // TODO add your handling code here:
     }//GEN-LAST:event_supportThickActionPerformed
 
+    private void checkParam(){
+        
+    }
+    
     private void bCreateModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCreateModelActionPerformed
         double worldX = Double.parseDouble(eWorldX.getText());
         double worldY = Double.parseDouble(eWorldY.getText());
@@ -717,7 +698,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                 System.out.println(fileChooser.getSelectedFile().getPath());
                 JOptionPane.showMessageDialog(this, 
                               "Файл '" + fileChooser.getSelectedFile() + 
-                              " сохранен");
+                              " открыт");
             } catch (IOException ex) {
                 Logger.getLogger(GeneralFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
