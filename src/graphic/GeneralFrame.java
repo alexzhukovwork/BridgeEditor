@@ -60,10 +60,12 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     private int number = 0;
     private Camera camera;
     private final NumberFormat numberMask;
+    private IRender render;
     
     
     public GeneralFrame() {
         model = null;
+        render = new RenderFill();
         numberMask = new DecimalFormat(); 
         numberMask.setMaximumIntegerDigits(4);
         numberMask.setMinimumIntegerDigits(0);
@@ -186,6 +188,8 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         jSaveScene = new javax.swing.JMenuItem();
         jLoadScene = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jInternalFrame1.setVisible(true);
 
@@ -601,7 +605,24 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("Edit");
+        jMenu3.setText("Вид");
+
+        jMenuItem1.setText("Закраска");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
+        jMenuItem2.setText("Проволка");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem2);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -721,6 +742,16 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
             }
         }
     }//GEN-LAST:event_jLoadSceneActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        render = new RenderFill();
+        workPanel.repaint();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        render = new RenderCabel();
+        workPanel.repaint();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void getModelParam(int number){
         eWorldX.setValue( models.get(number).worldX );
@@ -990,12 +1021,12 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                 setCameraEdit();
                 setModelEdit();
                 Graphics2D g2 = (Graphics2D) g;
-                Render.g2 = g2;
+                render.setRender(g2);
                 g2.setColor(Color.lightGray);
                 g2.fillRect(0, 0, getWidth(), getHeight());
 
                 if( !models.isEmpty() ){
-                    g2.drawImage( Render.getImage(models, getHeight(), getWidth(), 
+                    g2.drawImage( render.getImage(models, getHeight(), getWidth(), 
                             camera ), 0, 0, null);
                 }
             }
@@ -1068,6 +1099,8 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JMenuItem jSaveScene;
