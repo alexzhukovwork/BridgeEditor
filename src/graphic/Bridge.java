@@ -119,20 +119,20 @@ public class Bridge extends Model {
                 bridgeLength / 2,
                 0, 0, Math.atan(cat1 / cat2), 0.1, gep, supportThick) );
         triangles.addAll( createRectangleWorld(0.1, bindingHeight, supportThick, 
-                (lowerSupportWidth / 2.5 - supportWidth) - 0.05
+                (lowerSupportWidth / 2.5 - supportWidth) / 2 + cat1 - 0.05
                 , -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2) 
                 , bridgeLength / 2) );
         triangles.addAll( getRotateTriangle(supportWidth, bindingHeight, supportThick,
-                + (lowerSupportWidth / 2.5 - supportWidth) - supportWidth / 2, 
+                (lowerSupportWidth / 2.5 - supportWidth) / 2 + cat1 / 2, 
                 -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2), 
                 bridgeLength / 2, 0, 0, 0, 1) );
         
         triangles.addAll( getRotateTriangle(supportWidth, bindingHeight, supportThick,
-                - (lowerSupportWidth / 2.5 - supportWidth) + supportWidth / 2, 
+                - (lowerSupportWidth / 2.5 - supportWidth) / 2  - cat1 / 2, 
                 -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2), 
                 bridgeLength / 2, 0, 0, 0, 0) );
         triangles.addAll( createRectangleWorld(0.1, bindingHeight, supportThick, 
-                - (lowerSupportWidth / 2.5 - supportWidth) + 0.05
+                - (lowerSupportWidth / 2.5 - supportWidth) / 2 + 0.05 - cat1
                 , -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2) 
                 , bridgeLength / 2) );
         triangles.addAll( getRotate( -(lowerSupportWidth / 2.5 - supportWidth) / 2 - cat1 / 2,
@@ -145,26 +145,28 @@ public class Bridge extends Model {
                 -bridgeLength / 2,
                 0, 0, Math.atan(cat1 / cat2), 0.1, gep, supportThick) );
         triangles.addAll( createRectangleWorld(0.1, bindingHeight, supportThick, 
-                (lowerSupportWidth / 2.5 - supportWidth) - 0.05
+                (lowerSupportWidth / 2.5 - supportWidth) / 2 + cat1 - 0.05
                 , -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2) 
                 , -bridgeLength / 2) );
         triangles.addAll( getRotateTriangle(supportWidth, bindingHeight, supportThick,
-                + (lowerSupportWidth / 2.5 - supportWidth) - supportWidth / 2, 
+                (lowerSupportWidth / 2.5 - supportWidth) / 2 + cat1 / 2, 
                 -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2), 
                 -bridgeLength / 2, 0, 0, 0, 1) );
         
         triangles.addAll( getRotateTriangle(supportWidth, bindingHeight, supportThick,
-                - (lowerSupportWidth / 2.5 - supportWidth) + supportWidth / 2, 
+                - (lowerSupportWidth / 2.5 - supportWidth) / 2  - cat1 / 2, 
                 -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2), 
                 -bridgeLength / 2, 0, 0, 0, 0) );
         triangles.addAll( createRectangleWorld(0.1, bindingHeight, supportThick, 
-                - (lowerSupportWidth / 2.5 - supportWidth) + 0.05
+                - (lowerSupportWidth / 2.5 - supportWidth) / 2 + 0.05 - cat1
                 , -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2) 
                 , -bridgeLength / 2) );
         triangles.addAll( getRotate( -(lowerSupportWidth / 2.5 - supportWidth) / 2 - cat1 / 2,
                 -(lowerSupportHeight / 2 + supportHeight + bindingHeight / 2) , 
                 -bridgeLength / 2,
                 0, 0, -Math.atan(cat1 / cat2), 0.1, gep, supportThick) );
+        
+     
         
     }
     

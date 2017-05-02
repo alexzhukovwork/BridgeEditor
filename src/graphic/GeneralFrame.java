@@ -361,7 +361,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                                             .addComponent(bridgeWidth, javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(bridgeLength, javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(metalHeight))))))
-                        .addGap(20, 20, 20))
+                        .addGap(25, 25, 25))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -637,9 +637,10 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         // TODO add your handling code here:
     }//GEN-LAST:event_supportThickActionPerformed
 
-    private void checkParam(){
+    private void check(){
         
     }
+    
     
     private void bCreateModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCreateModelActionPerformed
         double worldX = Double.parseDouble(eWorldX.getText());
