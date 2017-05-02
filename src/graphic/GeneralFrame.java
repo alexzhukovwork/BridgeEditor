@@ -637,8 +637,20 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         // TODO add your handling code here:
     }//GEN-LAST:event_supportThickActionPerformed
 
-    private void check(){
+    private boolean check(){
+        boolean result = false;
         
+        result = Check.holes(
+                Double.parseDouble(firstHoleHeight.getText()),
+                Double.parseDouble(secondHoleHeight.getText()),
+                Double.parseDouble(thirdHoleHeight.getText()),
+                Double.parseDouble(supportHeight.getText()),
+                Double.parseDouble(bridgeLevel.getText()),
+                4,
+                Integer.parseInt(countHole.getText()) 
+        );
+        System.out.println(result);
+        return result;
     }
     
     
@@ -646,6 +658,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         double worldX = Double.parseDouble(eWorldX.getText());
         double worldY = Double.parseDouble(eWorldY.getText());
         double worldZ = Double.parseDouble(eWorldZ.getText());
+        if(!check())return;
         Bridge bridge = new Bridge(worldX, worldY, worldZ, "Мост" + models.size());
         models.add(bridge);
         setModelParam(models.size() - 1);
@@ -659,6 +672,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     }//GEN-LAST:event_bCreateModelActionPerformed
 
     private void bChangeModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bChangeModelActionPerformed
+        if(!check())return;
         if( !models.isEmpty() ){
             setModelParam(number % models.size());
             ( (Bridge)model ).createModel();

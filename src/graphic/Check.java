@@ -110,4 +110,15 @@ public class Check {
         return result;
     }
     
+    static boolean holes(double firstHole, double secondHole, double thirdHole, 
+            double supportHeight, double bridgeLevel, double bridgeHeight, int count){
+        boolean result = false;
+        double needHeight = firstHole + secondHole + thirdHole * count + 5 * count + 2 * count;
+        double canHeight = supportHeight - bridgeLevel - bridgeHeight;
+        if(firstHole > 0 && secondHole > 0 && thirdHole > 0 && needHeight <= canHeight)
+            result = true;
+        
+        return result;
+    }
+    
 }

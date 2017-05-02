@@ -79,14 +79,14 @@ public class Render implements Serializable {
              // v3.y *= d / v3.z;
   /*              v3.x = alpha + alpha * v3.x;//(d1 * v3.x / v3.z);
                 v3.y = beta - beta * v3.y;//(d2 * v3.y  * 2/ v3.z);
-    *//*            g2.setColor(Color.red);
+    */            g2.setColor(Color.red);
                 Path2D path = new Path2D.Double();
                 path.moveTo(v1.x, v1.y);
                 path.lineTo(v2.x, v2.y);
                 path.lineTo(v3.x, v3.y);
                 path.closePath();
                 g2.draw(path);
-*/
+
                 int minX = (int) Math.max(0, Math.ceil(Math.min(v1.x, Math.min(v2.x, v3.x))));
                 int maxX = (int) Math.min(img.getWidth() - 1, Math.floor(Math.max(v1.x, Math.max(v2.x, v3.x))));
                 int minY = (int) Math.max(0, Math.ceil(Math.min(v1.y, Math.min(v2.y, v3.y))));
@@ -110,7 +110,7 @@ public class Render implements Serializable {
                 }
             }  
         }
-        img.setRGB(0, 0, width, height, colors, 0, img.getWidth()); 
+       // img.setRGB(0, 0, width, height, colors, 0, img.getWidth()); 
         return img;
     }
 }

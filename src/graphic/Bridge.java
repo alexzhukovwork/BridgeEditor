@@ -81,7 +81,7 @@ public class Bridge extends Model {
             distance = bridgeLength / 6; 
         else if(countRope > 0)
             distance = (bridgeLength / 2 - bridgeLength / 5) / countRope;   
-       // System.out.println("distance " + distance);
+
         double allDistance = -bridgeLength / 2 + distance;
         double t = 0;
         double heightBalk = 0;
@@ -103,7 +103,6 @@ public class Bridge extends Model {
             triangles.addAll( createRectangleWorld(1, 1, 1, lowerSupportWidth / 5 + supportWidth / 2 - 1, y, z) );
             triangles.addAll( createRectangleWorld(1, 1, 1, -(lowerSupportWidth / 5 +supportWidth / 2) + 1, y, z) );
 
-            
             t += 0.001;
             
         }
@@ -175,12 +174,6 @@ public class Bridge extends Model {
         double cat2 = (lowerSupportWidth / 2.5) - supportWidth;
       
         double rot = Math.sqrt(cat1 * cat1 + cat2 * cat2);
-          System.out.println("cat2 " + cat2);
-        System.out.println("cat1 " + cat1);
-        System.out.println("c " + rot);
-        System.out.println("tg  " + Math.asin(cat1 / rot) );
-        double angle = (Math.asin(cat1 / rot));
-        System.out.println("angle " + angle);
         
         Vertex v1 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2, bridgeLength / 2 - supportThick / 2);
         Vertex v2 = new Vertex(cat2 / 2 + 1, -lowerSupportHeight/2, bridgeLength / 2 + supportThick / 2);
