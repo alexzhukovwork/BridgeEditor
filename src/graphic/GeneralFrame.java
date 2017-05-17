@@ -74,9 +74,14 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         setPaint();
         setKeyListener();
         camera = new Camera();
-        camera.d = 100;
+        
         camera.width = 600;
         camera.height = 300;   
+        camera.x = 200;
+        
+        camera.y = 200;
+        camera.z = -700;
+        camera.d = Math.sqrt(camera.x*camera.x + camera.y*camera.y + camera.z*camera.z);
         jSelectModel.removeAllItems();
         Bridge b = new Bridge(200, 200, 200, "Мост" + models.size());
         b.createModel();
@@ -695,7 +700,8 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     private void bChangeModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bChangeModelActionPerformed
         if(!check())return;
         if( !models.isEmpty() ){
-            setModelParam(number % models.size());
+            setModelParam(jSelectModel.getSelectedIndex());
+            model = models.get(jSelectModel.getSelectedIndex());
             ( (Bridge)model ).createModel();
             workPanel.repaint();
         }
@@ -887,16 +893,16 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                         camera.y += 5;
                         break;
                     case 109:
-                        model.dx -= 0.1;
-                        model.dy -= 0.1;
-                        model.dz -= 0.1;
-                        camera.z -= 1;
+                      //  model.dx -= 0.1;
+                      //  model.dy -= 0.1;
+                      //  model.dz -= 0.1;
+                        camera.z -= 10;
                         break;
                     case 107:
-                        model.dx += 0.1;
-                        model.dy += 0.1;
-                        model.dz += 0.1;
-                        camera.z += 1;
+                       // model.dx += 0.1;
+                       // model.dy += 0.1;
+                      //  model.dz += 0.1;
+                        camera.z += 10;
                         break;
                     case 105:
                         model.angleZ++;

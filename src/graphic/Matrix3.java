@@ -78,6 +78,24 @@ public class Matrix3 {
         }));
     }
     
+     public static Matrix3 GetPerspectiveMatrix()
+        {
+            double Far = 1000;
+            double Near = 10;
+            double fov = 70;
+            double ar = 640 / 500;
+            double tan = Math.tan( Math.toRadians(fov / 2) );
+            
+            
+            return new Matrix3(new double[]{
+                (1 / tan) / ar, 0,          0,                              0,
+                0,              1 / tan,    0,                              0,
+                0,              0,          (Far + Near)/Far - Near,        1,
+                0,              0,          2 * Far * Near / (Far - Near), 0
+            });
+            
+        }
+    
     public static Matrix3 getWorld(double x, double y, double z){
         return new Matrix3(new double[]{
             1, 0, 0, 0,
@@ -98,10 +116,8 @@ public class Matrix3 {
     
     public static Matrix3 getCam(double x, double y, double z, 
             double angleX, double angleY, double angleZ, double d){
-        return getCamCoordinat(x, y, z).multiply( getRotateСam(angleX, angleY, angleZ) );
-        
-        
-              //  .multiply(getCamPerspective(d) );
+        return ( getRotateСam(angleX, angleY, angleZ) ).multiply(getCamCoordinat(-x, -y, -z));//.multiply(GetPerspectiveMatrix());
+             //   .multiply(getCamPerspective(d) );
     }
     
     public static Matrix3 getCamCoordinat(double x, double y, double z){
@@ -117,7 +133,7 @@ public class Matrix3 {
         return new Matrix3(new double[]{
             1, 0, 0, 0,
             0, 1, 0, 0,
-            0, 0, 1, 1 / d,
+            0, 0, 1, 1/d,
             0, 0, 0, 0
         });
     }

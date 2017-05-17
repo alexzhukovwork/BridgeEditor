@@ -156,14 +156,13 @@ public class Model implements Coordinats, Serializable{
         double x = width / 2.0;
         double y = height / 2.0;
         double z = thick / 2.0; 
-        double step = 1;
         
         List <Triangle> triangles = new ArrayList<Triangle>();
         for(double i = -y; i < y; i += height)
             for(double j = -x; j < x; j += width)
                 for(double k = -z; k < z; k += thick){
                     triangles.add( new Triangle(
-                        new Vertex(j + width, -y, k       ),
+                        new Vertex(j + width , -y, k       ),
                         new Vertex(j        , -y, k       ),
                         new Vertex(j        , -y, k + thick),
                         Color.black) );

@@ -5,16 +5,19 @@
         <group>
             <file>file:/C:/Work/Graphic/src/graphic/Triangle.java</file>
             <file>file:/C:/Work/Graphic/src/graphic/Graphic.java</file>
-            <file>file:/C:/Work/Graphic/src/graphic/Bridge.java</file>
-            <file>file:/C:/Work/Graphic/src/graphic/Camera.java</file>
-            <file>file:/C:/Work/Graphic/src/graphic/GeneralFrame.java</file>
-            <file>file:/C:/Work/Graphic/src/graphic/Vertex.java</file>
             <file>file:/C:/Work/Graphic/src/graphic/Model.java</file>
-            <file>file:/C:/Work/Graphic/src/graphic/Coordinats.java</file>
-            <file>file:/C:/Work/Graphic/src/graphic/Render.java</file>
             <file>file:/C:/Work/Graphic/src/graphic/CoordinatesSystem.java</file>
             <file>file:/C:/Work/Graphic/src/graphic/Matrix3.java</file>
+            <file>file:/C:/Work/Graphic/src/graphic/RenderFill.java</file>
+            <file>file:/C:/Work/Graphic/src/graphic/Bridge.java</file>
+            <file>file:/C:/Work/Graphic/src/graphic/Camera.java</file>
+            <file>file:/C:/Work/Graphic/src/graphic/RenderCabel.java</file>
+            <file>file:/C:/Work/Graphic/src/graphic/GeneralFrame.java</file>
+            <file>file:/C:/Work/Graphic/src/graphic/Vertex.java</file>
+            <file>file:/C:/Work/Graphic/src/graphic/Coordinats.java</file>
+            <file>file:/C:/Work/Graphic/src/graphic/Check.java</file>
             <file>file:/C:/Work/Graphic/src/graphic/Cube.java</file>
+            <file>file:/C:/Work/Graphic/src/graphic/IRender.java</file>
         </group>
     </open-files>
 </project-private>
