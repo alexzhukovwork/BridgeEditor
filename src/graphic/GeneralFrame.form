@@ -205,55 +205,69 @@
                                           <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
                                           <Component id="jLabel7" alignment="0" pref="158" max="32767" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lowerSupportThick" min="-2" pref="109" max="-2" attributes="0"/>
-                                          <Component id="bindingHeight" min="-2" pref="109" max="-2" attributes="0"/>
-                                          <Component id="thirdHoleHeight" min="-2" pref="109" max="-2" attributes="0"/>
-                                          <Component id="secondHoleHeight" min="-2" pref="109" max="-2" attributes="0"/>
-                                          <Component id="firstHoleHeight" min="-2" pref="109" max="-2" attributes="0"/>
-                                          <Component id="supportHeight" min="-2" pref="109" max="-2" attributes="0"/>
-                                          <Component id="supportThick" min="-2" pref="109" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jSecondHoleHeight" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                                  <Component id="jThirdHoleHeight" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                                  <Component id="jBindingHeight" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jFirstHoleHeight" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                                  <Component id="jSupportHeight" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                                  <Component id="jSupportThick" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                                  <Component id="jLowerSupportThick" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Component id="jLabel9" max="32767" attributes="0"/>
                                           <Component id="jLabel8" max="32767" attributes="0"/>
-                                          <Component id="jLabel10" max="32767" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace min="113" pref="113" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="metalWidth" min="-2" pref="109" max="-2" attributes="0"/>
-                                          <Component id="lowerSupportHeight" min="-2" pref="109" max="-2" attributes="0"/>
-                                          <Component id="lowerSupportWidth" min="-2" pref="109" max="-2" attributes="0"/>
+                                          <Component id="jLowerSupportHeight" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                          <Component id="jLowerSupportWidth" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="jLabel15" max="32767" attributes="0"/>
-                                          <Component id="jLabel14" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jLabel13" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jLabel12" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jLabel11" max="32767" attributes="0"/>
-                                          <Component id="jLabel16" pref="158" max="32767" attributes="0"/>
-                                          <Component id="bChangeModel" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="bCreateModel" alignment="0" pref="130" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                              <Component id="bChangeModel" min="-2" pref="175" max="-2" attributes="0"/>
+                                          </Group>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="countHole" alignment="1" max="32767" attributes="0"/>
-                                                  <Component id="countRope" alignment="1" max="32767" attributes="0"/>
-                                                  <Component id="bridgeLevel" alignment="1" max="32767" attributes="0"/>
-                                                  <Component id="bridgeWidth" alignment="1" max="32767" attributes="0"/>
-                                                  <Component id="bridgeLength" alignment="1" max="32767" attributes="0"/>
-                                                  <Component id="metalHeight" max="32767" attributes="0"/>
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="jLabel11" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
+                                                  <Component id="jLabel12" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
+                                                  <Component id="jLabel13" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
+                                                  <Component id="jLabel14" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
+                                                  <Component id="jLabel15" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
+                                                  <Component id="jLabel16" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
                                               </Group>
+                                              <EmptySpace max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jBridgeWidth" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                          <Component id="jBridgeLength" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                          <Component id="jMetalHeight" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                          <Component id="jBridgeLevel" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                          <Component id="jCountRope" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                          <Component id="jCountHole" alignment="1" min="-2" pref="109" max="-2" attributes="0"/>
+                                          <Component id="bCreateModel" alignment="1" min="-2" pref="170" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="jLabel10" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jMetalWidth" min="-2" pref="109" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
@@ -267,38 +281,40 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="eWorldX" min="-2" pref="72" max="-2" attributes="0"/>
+                                      <Component id="jEWorldX" min="-2" pref="72" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="jLabel29" min="-2" pref="34" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="eWorldAngleX" min="-2" pref="72" max="-2" attributes="0"/>
+                                      <Component id="jEWorldAngleX" min="-2" pref="72" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                                      <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="eWorldY" min="-2" pref="72" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="jLabel19" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel31" alignment="0" min="-2" pref="34" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jEWorldAngleY" max="32767" attributes="0"/>
+                                  <Component id="jEWorldY" pref="72" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="eWorldZ" min="-2" pref="72" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                                      <Component id="jLabel31" min="-2" pref="34" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="eWorldAngleY" min="-2" pref="72" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="jLabel32" min="-2" pref="34" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="eWorldAngleZ" min="-2" pref="72" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jEWorldZ" min="-2" pref="72" max="-2" attributes="0"/>
+                                  <Component id="jEWorldAngleZ" alignment="0" min="-2" pref="72" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -310,104 +326,104 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="supportThick" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jSupportThick" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="supportHeight" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jSupportHeight" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="firstHoleHeight" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jFirstHoleHeight" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="secondHoleHeight" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jSecondHoleHeight" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="thirdHoleHeight" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jThirdHoleHeight" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="bindingHeight" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jBindingHeight" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lowerSupportThick" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLowerSupportThick" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lowerSupportHeight" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLowerSupportHeight" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLowerSupportWidth" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                          <Component id="lowerSupportWidth" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel10" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
-                          <Component id="metalWidth" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jMetalWidth" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="metalHeight" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jMetalHeight" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="bridgeLength" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jBridgeLength" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="bridgeWidth" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jBridgeWidth" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="bridgeLevel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jBridgeLevel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="countRope" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCountRope" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="countHole" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCountHole" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="eWorldX" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="eWorldZ" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="eWorldY" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jEWorldX" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jEWorldY" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jEWorldZ" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="eWorldAngleY" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="eWorldAngleX" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="eWorldAngleZ" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel32" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jEWorldAngleX" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jEWorldAngleY" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jEWorldAngleZ" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                      <EmptySpace pref="12" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="bCreateModel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="bChangeModel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -498,44 +514,6 @@
                 <Property name="text" type="java.lang.String" value="&#x41a;&#x43e;&#x43b;&#x438;&#x447;&#x435;&#x441;&#x442;&#x432;&#x43e; &#x43e;&#x442;&#x432;&#x435;&#x440;&#x441;&#x442;&#x438;&#x439; &#x43f;&#x43e;&#x441;&#x43b;&#x435; 2"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="supportThick">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="supportThickActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="supportHeight">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="firstHoleHeight">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="secondHoleHeight">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="thirdHoleHeight">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="bindingHeight">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="lowerSupportThick">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="lowerSupportHeight">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="lowerSupportWidth">
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(new NumberFormatter(numberMask)); "/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="metalWidth">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="metalHeight">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="bridgeLength">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="bridgeWidth">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="bridgeLevel">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="countRope">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="countHole">
-            </Component>
             <Component class="javax.swing.JToggleButton" name="bCreateModel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#x421;&#x43e;&#x437;&#x434;&#x430;&#x442;&#x44c;"/>
@@ -566,8 +544,6 @@
                 <Property name="text" type="java.lang.String" value="&#x41f;&#x43e;&#x437;&#x438;&#x446;&#x438;&#x44f; &#x43d;&#x430; &#x441;&#x446;&#x435;&#x43d;&#x435;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="eWorldX">
-            </Component>
             <Component class="javax.swing.JLabel" name="jLabel18">
               <Properties>
                 <Property name="text" type="java.lang.String" value="X"/>
@@ -583,16 +559,6 @@
                 <Property name="text" type="java.lang.String" value="Z"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="eWorldZ">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="eWorldY">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="eWorldAngleY">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="eWorldAngleX">
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="eWorldAngleZ">
-            </Component>
             <Component class="javax.swing.JLabel" name="jLabel29">
               <Properties>
                 <Property name="text" type="java.lang.String" value="angleX"/>
@@ -607,6 +573,50 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="angleZ"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jSupportThick">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jSupportHeight">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jFirstHoleHeight">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jSecondHoleHeight">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jThirdHoleHeight">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jBindingHeight">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jLowerSupportThick">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jLowerSupportHeight">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jLowerSupportWidth">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jMetalWidth">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jMetalHeight">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jBridgeLength">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jBridgeWidth">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jBridgeLevel">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jCountRope">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jCountHole">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jEWorldX">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jEWorldY">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jEWorldZ">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jEWorldAngleX">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jEWorldAngleY">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jEWorldAngleZ">
             </Component>
           </SubComponents>
         </Container>

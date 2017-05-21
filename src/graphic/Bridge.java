@@ -91,12 +91,12 @@ public class Bridge extends Model {
 
             
             if (currentCount < countRope && z > allDistance) {
-                heightBalk = -(y + bridgeLevel + bridgeHeight);
+                heightBalk = -(y + bridgeLevel + bridgeHeight + lowerSupportHeight / 2 - 5);
 
-                triangles.addAll( createRectangleWorld(1, heightBalk, 1, -(lowerSupportWidth / 5 + supportWidth / 2) + 1, y + heightBalk / 2, z) );
-                triangles.addAll( createRectangleWorld(1, heightBalk, 1, -(lowerSupportWidth / 5 + supportWidth / 2) + 1, y + heightBalk / 2, -z) );
-                triangles.addAll( createRectangleWorld(1, heightBalk, 1, (lowerSupportWidth / 5 + supportWidth / 2) - 1, y + heightBalk / 2, z) );
-                triangles.addAll( createRectangleWorld(1, heightBalk, 1, (lowerSupportWidth / 5 + supportWidth / 2) - 1, y + heightBalk / 2, -z) );
+                triangles.addAll( createRectangleWorld(1, heightBalk, 1, -(lowerSupportWidth / 5 + supportWidth / 2) + 1, y + heightBalk / 2 - bridgeHeight / 2, z) );
+                triangles.addAll( createRectangleWorld(1, heightBalk, 1, -(lowerSupportWidth / 5 + supportWidth / 2) + 1, y + heightBalk / 2 - bridgeHeight / 2, -z) );
+                triangles.addAll( createRectangleWorld(1, heightBalk, 1, (lowerSupportWidth / 5 + supportWidth / 2) - 1, y + heightBalk / 2 - bridgeHeight / 2, z) );
+                triangles.addAll( createRectangleWorld(1, heightBalk, 1, (lowerSupportWidth / 5 + supportWidth / 2) - 1, y + heightBalk / 2 - bridgeHeight / 2, -z) );
                 allDistance += distance;
                 currentCount++;
             }

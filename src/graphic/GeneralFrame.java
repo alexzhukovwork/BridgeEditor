@@ -41,6 +41,8 @@ import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
@@ -61,6 +63,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     private Camera camera;
     private final NumberFormat numberMask;
     private IRender render;
+    private ArrayList<JSpinner> spinners = new ArrayList<JSpinner>();
     
     
     public GeneralFrame() {
@@ -70,6 +73,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         numberMask.setMaximumIntegerDigits(4);
         numberMask.setMinimumIntegerDigits(0);
         initComponents();
+        setSpinner();
         setSelectListener();
         setPaint();
         setKeyListener();
@@ -102,6 +106,9 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         camera.e = new Vertex(100, -50, 500);
         camera.setCamToDot();
         
+        System.out.println(jSupportHeight.getValue() + " " + (jSupportHeight.getValue().getClass()));
+        
+        
     }
     
     private void setSelectListener(){
@@ -115,6 +122,40 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                 }
             }
         });
+    }
+    
+    private void setSpinner(){
+        double v = 1;
+        double min = 1;
+        double max = 10000;
+        double step = 1;
+        spinners.add(jEWorldX);
+        spinners.add(jEWorldY);
+        spinners.add(jEWorldZ);
+        spinners.add(jEWorldAngleX);
+        spinners.add(jEWorldAngleY);
+        spinners.add(jEWorldAngleZ);
+        spinners.add(jBindingHeight);
+        spinners.add(jBridgeLength);
+        spinners.add(jBridgeLevel);
+        spinners.add(jBridgeWidth);
+        spinners.add(jFirstHoleHeight);
+        spinners.add(jLowerSupportHeight);
+        spinners.add(jLowerSupportThick);
+        spinners.add(jLowerSupportWidth);
+        spinners.add(jMetalHeight);
+        spinners.add(jMetalWidth);
+        spinners.add(jSecondHoleHeight);
+        spinners.add(jThirdHoleHeight);
+        spinners.add(jSupportHeight);
+        spinners.add(jSupportThick);
+        
+        for(JSpinner spinner : spinners){
+            SpinnerNumberModel spinnerModel = new SpinnerNumberModel(v,min,max,step);
+            spinner.setModel(spinnerModel);
+            spinner.setEditor(new JSpinner.NumberEditor(spinner, "#0.000"));
+        }
+
     }
 
     /**
@@ -153,37 +194,37 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        supportThick = new javax.swing.JFormattedTextField();
-        supportHeight = new javax.swing.JFormattedTextField();
-        firstHoleHeight = new javax.swing.JFormattedTextField();
-        secondHoleHeight = new javax.swing.JFormattedTextField();
-        thirdHoleHeight = new javax.swing.JFormattedTextField();
-        bindingHeight = new javax.swing.JFormattedTextField();
-        lowerSupportThick = new javax.swing.JFormattedTextField();
-        lowerSupportHeight = new javax.swing.JFormattedTextField();
-        lowerSupportWidth = new JFormattedTextField(new NumberFormatter(numberMask)); ;
-        metalWidth = new javax.swing.JFormattedTextField();
-        metalHeight = new javax.swing.JFormattedTextField();
-        bridgeLength = new javax.swing.JFormattedTextField();
-        bridgeWidth = new javax.swing.JFormattedTextField();
-        bridgeLevel = new javax.swing.JFormattedTextField();
-        countRope = new javax.swing.JFormattedTextField();
-        countHole = new javax.swing.JFormattedTextField();
         bCreateModel = new javax.swing.JToggleButton();
         bChangeModel = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
-        eWorldX = new javax.swing.JFormattedTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        eWorldZ = new javax.swing.JFormattedTextField();
-        eWorldY = new javax.swing.JFormattedTextField();
-        eWorldAngleY = new javax.swing.JFormattedTextField();
-        eWorldAngleX = new javax.swing.JFormattedTextField();
-        eWorldAngleZ = new javax.swing.JFormattedTextField();
         jLabel29 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
+        jSupportThick = new javax.swing.JSpinner();
+        jSupportHeight = new javax.swing.JSpinner();
+        jFirstHoleHeight = new javax.swing.JSpinner();
+        jSecondHoleHeight = new javax.swing.JSpinner();
+        jThirdHoleHeight = new javax.swing.JSpinner();
+        jBindingHeight = new javax.swing.JSpinner();
+        jLowerSupportThick = new javax.swing.JSpinner();
+        jLowerSupportHeight = new javax.swing.JSpinner();
+        jLowerSupportWidth = new javax.swing.JSpinner();
+        jMetalWidth = new javax.swing.JSpinner();
+        jMetalHeight = new javax.swing.JSpinner();
+        jBridgeLength = new javax.swing.JSpinner();
+        jBridgeWidth = new javax.swing.JSpinner();
+        jBridgeLevel = new javax.swing.JSpinner();
+        jCountRope = new javax.swing.JSpinner();
+        jCountHole = new javax.swing.JSpinner();
+        jEWorldX = new javax.swing.JSpinner();
+        jEWorldY = new javax.swing.JSpinner();
+        jEWorldZ = new javax.swing.JSpinner();
+        jEWorldAngleX = new javax.swing.JSpinner();
+        jEWorldAngleY = new javax.swing.JSpinner();
+        jEWorldAngleZ = new javax.swing.JSpinner();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
@@ -288,12 +329,6 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
 
         jLabel16.setText("Количество отверстий после 2");
 
-        supportThick.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                supportThickActionPerformed(evt);
-            }
-        });
-
         bCreateModel.setText("Создать");
         bCreateModel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -343,46 +378,54 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lowerSupportThick, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bindingHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(thirdHoleHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(secondHoleHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(firstHoleHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(supportHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(supportThick, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jSecondHoleHeight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jThirdHoleHeight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jBindingHeight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jFirstHoleHeight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jSupportHeight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jSupportThick, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLowerSupportThick, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(113, 113, 113)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(metalWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lowerSupportHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lowerSupportWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                                    .addComponent(bChangeModel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(bCreateModel, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                    .addComponent(jLowerSupportHeight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLowerSupportWidth, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(21, 21, 21)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(countHole, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(countRope, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(bridgeLevel, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(bridgeWidth, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(bridgeLength, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(metalHeight))))))
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(bChangeModel, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jBridgeWidth, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jBridgeLength, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jMetalHeight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jBridgeLevel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCountRope, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCountHole, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bCreateModel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jMetalWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(25, 25, 25))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel17)
@@ -392,32 +435,31 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel18)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(eWorldX, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jEWorldX, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(eWorldAngleX, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(6, 6, 6)
+                                .addComponent(jEWorldAngleX, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addComponent(jLabel19)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(eWorldY, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel20)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(eWorldZ, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jEWorldAngleY)
+                            .addComponent(jEWorldY, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(eWorldAngleY, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel20)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(eWorldAngleZ, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(32, 32, 32))))
+                                .addGap(2, 2, 2)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jEWorldZ, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jEWorldAngleZ, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -425,86 +467,86 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(supportThick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSupportThick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(supportHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSupportHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(firstHoleHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jFirstHoleHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(secondHoleHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSecondHoleHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(thirdHoleHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jThirdHoleHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(bindingHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBindingHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(lowerSupportThick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLowerSupportThick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(lowerSupportHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLowerSupportHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(lowerSupportWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLowerSupportWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(metalWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jMetalWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(metalHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jMetalHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(bridgeLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBridgeLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(bridgeWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBridgeWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(bridgeLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBridgeLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(countRope, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCountRope, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
-                    .addComponent(countHole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCountHole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(eWorldX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18)
                     .addComponent(jLabel19)
                     .addComponent(jLabel20)
-                    .addComponent(eWorldZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(eWorldY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jEWorldX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jEWorldY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jEWorldZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(eWorldAngleY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(eWorldAngleX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(eWorldAngleZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel29)
                     .addComponent(jLabel31)
-                    .addComponent(jLabel32))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                    .addComponent(jLabel32)
+                    .addComponent(jEWorldAngleX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jEWorldAngleY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jEWorldAngleZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bCreateModel)
                     .addComponent(bChangeModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -672,54 +714,118 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void supportThickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supportThickActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_supportThickActionPerformed
-
     private boolean check(){
-        boolean result = false;
+        boolean result = true;
         
-        result = Check.holes(
-                Double.parseDouble(firstHoleHeight.getText()),
-                Double.parseDouble(secondHoleHeight.getText()),
-                Double.parseDouble(thirdHoleHeight.getText()),
-                Double.parseDouble(supportHeight.getText()),
-                Double.parseDouble(bridgeLevel.getText()),
-                4,
-                Integer.parseInt(countHole.getText()) 
-        );
-        System.out.println(result);
+        if( !Check.holes(
+                (Double)(jFirstHoleHeight.getValue()),
+                (Double)(jSecondHoleHeight.getValue()),
+                (Double)(jThirdHoleHeight.getValue()),
+                (Double)(jSupportHeight.getValue()),
+                (Double)(jBridgeLevel.getValue()),
+                ((Bridge)model).bridgeHeight,
+                (int)(jCountHole.getValue()) 
+        ) ){
+            JOptionPane.showMessageDialog(this, 
+                    "Один из параметров для построения отверстий был задан неверно", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+            result = false;
+        }
+        
+        if( !Check.blindingHeight((Double)jBindingHeight.getValue()) ){
+            JOptionPane.showMessageDialog(this, 
+                    "Высота крепления троса должна быть больше нуля", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+            result = false;
+        }
+        
+        if ( !Check.bridgeLenght((Double)jBridgeLength.getValue()) ){
+            JOptionPane.showMessageDialog(this, 
+                    "Длина моста должна быть больше нуля", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+            result = false;
+        }
+        
+        if( !Check.bridgeLevel((Double)jBridgeLevel.getValue(), (Double)jSupportHeight.getValue()) ){
+            JOptionPane.showMessageDialog(this, 
+                    "Уровень моста должен быть меньше высоты опоры", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+            result = false;
+        }
+        
+        if( !Check.bridgeWidth((Double)jBridgeWidth.getValue(), ((Bridge)model).supportWidth,
+                (Double)jLowerSupportWidth.getValue()) ){
+            JOptionPane.showMessageDialog(this, 
+                    "Ширина моста не должна превышать ширину 3х опор", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+            result = false;
+        }
+        
+        if( !Check.lowerSupportHeight((Double)jLowerSupportHeight.getValue()) ){
+            JOptionPane.showMessageDialog(this, 
+                    "Высота основания опоры должна быть бльше нуля", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+            result = false;
+        }
+        
+        if( !Check.lowerSupportThick((Double)jLowerSupportThick.getValue()) ){
+            JOptionPane.showMessageDialog(this, 
+                    "Толщина основания опоры должна быть больше нуля", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+            result = false;
+        }
+        
+        if( !Check.lowerSupportWidth((Double)jLowerSupportWidth.getValue()) ){
+            JOptionPane.showMessageDialog(this, 
+                    "Ширина основания опоры должна быть больше нуля", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+            result = false;
+        }
+        
+        if( !Check.metalHeight((Double)jMetalHeight.getValue(), (Double)jBridgeLevel.getValue()) ){
+            JOptionPane.showMessageDialog(this, 
+                    "Высота металлоконструкций должна быть меньше уровня моста", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+            result = false;
+        }
+        
+        if( !Check.metalWidth((Double)jMetalWidth.getValue(), (Double)jBridgeWidth.getValue()) ){
+            JOptionPane.showMessageDialog(this, 
+                    "Ширина металлоконструкций должна быть в 2 раза меньше ширины моста", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+            result = false;
+        }
+        
+        if( !Check.supportHeight((Double)jSupportHeight.getValue(), (Double)jBridgeLevel.getValue()) ){
+            JOptionPane.showMessageDialog(this, 
+                    "Высота опоры должна быть больше уровня моста", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+            result = false;
+        }
+        
+        if( !Check.supportThick((Double)jSupportThick.getValue(), (Double)jLowerSupportThick.getValue()) ){
+            JOptionPane.showMessageDialog(this, 
+                    "Толщина опоры не должна превышать тольщину основания опоры", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+            result = false;
+        }
+            
         return result;
     }
     
     
-    private void bCreateModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCreateModelActionPerformed
-        double worldX = Double.parseDouble(eWorldX.getText());
-        double worldY = Double.parseDouble(eWorldY.getText());
-        double worldZ = Double.parseDouble(eWorldZ.getText());
-        if(!check())return;
-        Bridge bridge = new Bridge(worldX, worldY, worldZ, "Мост" + models.size());
-        models.add(bridge);
-        setModelParam(models.size() - 1);
-        ( (Bridge)models.get(models.size() - 1) ).createModel();
-        jSelectModel.addItem(bridge.getName());
-        jSelectModel.setSelectedIndex( models.size() - 1 );
-
-        workPanel.repaint();
-        workPanel.requestFocus(true);
-        workPanel.requestFocus();
-    }//GEN-LAST:event_bCreateModelActionPerformed
-
-    private void bChangeModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bChangeModelActionPerformed
-        if(!check())return;
-        if( !models.isEmpty() ){
-            setModelParam(jSelectModel.getSelectedIndex());
-            model = models.get(jSelectModel.getSelectedIndex());
-            ( (Bridge)model ).createModel();
-            workPanel.repaint();
-        }
-    }//GEN-LAST:event_bChangeModelActionPerformed
-
     private void jSaveSceneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSaveSceneActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Сохранение файла");
@@ -772,54 +878,82 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         workPanel.repaint();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void bChangeModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bChangeModelActionPerformed
+        if(!check()) return;
+        if( !models.isEmpty() ){
+            setModelParam(jSelectModel.getSelectedIndex());
+            model = models.get(jSelectModel.getSelectedIndex());
+            ( (Bridge)model ).createModel();
+            workPanel.repaint();
+        }
+    }//GEN-LAST:event_bChangeModelActionPerformed
+
+    private void bCreateModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCreateModelActionPerformed
+        if( !check() ) return;
+        double worldX = (Double)(jEWorldX.getValue());
+        double worldY = (Double)(jEWorldY.getValue());
+        double worldZ = (Double)(jEWorldZ.getValue());
+        if(!check())return;
+        Bridge bridge = new Bridge(worldX, worldY, worldZ, "Мост" + models.size());
+        models.add(bridge);
+        setModelParam(models.size() - 1);
+        ( (Bridge)models.get(models.size() - 1) ).createModel();
+        jSelectModel.addItem(bridge.getName());
+        jSelectModel.setSelectedIndex( models.size() - 1 );
+
+        workPanel.repaint();
+        workPanel.requestFocus(true);
+        workPanel.requestFocus();
+    }//GEN-LAST:event_bCreateModelActionPerformed
+
     private void getModelParam(int number){
-        eWorldX.setValue( models.get(number).worldX );
-        eWorldY.setValue( models.get(number).worldY );
-        eWorldZ.setValue( models.get(number).worldZ );
-        eWorldAngleX.setValue( models.get(number).angleX );
-        eWorldAngleY.setValue( models.get(number).angleY );
-        eWorldAngleZ.setValue( models.get(number).angleZ );
-        bridgeLength.setValue( ( (Bridge)models.get(number) ).bridgeLength );
-        bridgeLevel.setValue( ( (Bridge)models.get(number) ).bridgeLevel );
-        bridgeWidth.setValue( ( (Bridge)models.get(number) ).bridgeWidth );
-        supportHeight.setValue( ( (Bridge)models.get(number) ).supportHeight );
-        supportThick.setValue( ( (Bridge)models.get(number) ).supportThick );
-        lowerSupportHeight.setValue( ( (Bridge)models.get(number) ).lowerSupportHeight );
-        lowerSupportThick.setValue( ( (Bridge)models.get(number) ).lowerSupportThick );
-        lowerSupportWidth.setValue( ( (Bridge)models.get(number) ).lowerSupportWidth );
-        firstHoleHeight.setValue( ( (Bridge)models.get(number) ).firstHoleHeight );
-        secondHoleHeight.setValue( ( (Bridge)models.get(number) ).secondHoleHeight );
-        thirdHoleHeight.setValue( ( (Bridge)models.get(number) ).thirdHoleHeight );
-        bindingHeight.setValue( ( (Bridge)models.get(number) ).bindingHeight );
-        metalHeight.setValue( ( (Bridge)models.get(number) ).metalHeight );
-        metalWidth.setValue( ( (Bridge)models.get(number) ).metalWidth );
-        countHole.setValue( ( (Bridge)models.get(number) ).countThirdHole );
-        countRope.setValue( ( (Bridge)models.get(number) ).countRope );
+        jEWorldX.setValue( models.get(number).worldX );
+        jEWorldY.setValue( models.get(number).worldY );
+        jEWorldZ.setValue( models.get(number).worldZ );
+        jEWorldAngleX.setValue( models.get(number).angleX );
+        jEWorldAngleY.setValue( models.get(number).angleY );
+        jEWorldAngleZ.setValue( models.get(number).angleZ );
+        jBridgeLength.setValue( ( (Bridge)models.get(number) ).bridgeLength );
+        jBridgeLevel.setValue( ( (Bridge)models.get(number) ).bridgeLevel );
+        jBridgeWidth.setValue( ( (Bridge)models.get(number) ).bridgeWidth );
+        jSupportHeight.setValue( ( (Bridge)models.get(number) ).supportHeight );
+        jSupportThick.setValue( ( (Bridge)models.get(number) ).supportThick );
+        jLowerSupportHeight.setValue( ( (Bridge)models.get(number) ).lowerSupportHeight );
+        jLowerSupportThick.setValue( ( (Bridge)models.get(number) ).lowerSupportThick );
+        jLowerSupportWidth.setValue( ( (Bridge)models.get(number) ).lowerSupportWidth );
+        jFirstHoleHeight.setValue( ( (Bridge)models.get(number) ).firstHoleHeight );
+        jSecondHoleHeight.setValue( ( (Bridge)models.get(number) ).secondHoleHeight );
+        jThirdHoleHeight.setValue( ( (Bridge)models.get(number) ).thirdHoleHeight );
+        jBindingHeight.setValue( ( (Bridge)models.get(number) ).bindingHeight );
+        jMetalHeight.setValue( ( (Bridge)models.get(number) ).metalHeight );
+        jMetalWidth.setValue( ( (Bridge)models.get(number) ).metalWidth );
+        jCountHole.setValue( ( (Bridge)models.get(number) ).countThirdHole );
+        jCountRope.setValue( ( (Bridge)models.get(number) ).countRope );
     }
     
     private void setModelParam(int number){
-        models.get(number).worldX = Double.parseDouble( eWorldX.getText() );
-        models.get(number).worldY = Double.parseDouble( eWorldY.getText() );
-        models.get(number).worldZ = Double.parseDouble( eWorldZ.getText() );
-        models.get(number).angleX = Double.parseDouble( eWorldAngleX.getText() );
-        models.get(number).angleY = Double.parseDouble( eWorldAngleY.getText() );
-        models.get(number).angleZ = Double.parseDouble( eWorldAngleZ.getText() );
-        ( (Bridge)models.get(number) ).bridgeLength = Double.parseDouble( bridgeLength.getText() );
-        ( (Bridge)models.get(number) ).bridgeLevel = Double.parseDouble( bridgeLevel.getText() );
-        ( (Bridge)models.get(number) ).bridgeWidth = Double.parseDouble( bridgeWidth.getText() );
-        ( (Bridge)models.get(number) ).supportHeight = Double.parseDouble( supportHeight.getText() );
-        ( (Bridge)models.get(number) ).supportThick = Double.parseDouble( supportThick.getText() );
-        ( (Bridge)models.get(number) ).lowerSupportHeight = Double.parseDouble( lowerSupportHeight.getText() );
-        ( (Bridge)models.get(number) ).lowerSupportThick = Double.parseDouble( lowerSupportThick.getText() );
-        ( (Bridge)models.get(number) ).lowerSupportWidth = Double.parseDouble( lowerSupportWidth.getText() );
-        ( (Bridge)models.get(number) ).firstHoleHeight = Double.parseDouble( firstHoleHeight.getText() );
-        ( (Bridge)models.get(number) ).secondHoleHeight = Double.parseDouble( secondHoleHeight.getText() );
-        ( (Bridge)models.get(number) ).thirdHoleHeight = Double.parseDouble( thirdHoleHeight.getText() );
-        ( (Bridge)models.get(number) ).bindingHeight = Double.parseDouble( bindingHeight.getText() );
-        ( (Bridge)models.get(number) ).metalHeight = Double.parseDouble( metalHeight.getText() );
-        ( (Bridge)models.get(number) ).metalWidth = Double.parseDouble( metalWidth.getText() );
-        ( (Bridge)models.get(number) ).countThirdHole = Integer.parseInt( countHole.getText() );
-        ( (Bridge)models.get(number) ).countRope = Integer.parseInt( countRope.getText() );
+        models.get(number).worldX = (Double)( jEWorldX.getValue());
+        models.get(number).worldY = (Double)( jEWorldY.getValue() );
+        models.get(number).worldZ = (Double)( jEWorldZ.getValue() );
+        models.get(number).angleX = (Double)( jEWorldAngleX.getValue() );
+        models.get(number).angleY = (Double)( jEWorldAngleY.getValue() );
+        models.get(number).angleZ = (Double)( jEWorldAngleZ.getValue() );
+        ( (Bridge)models.get(number) ).bridgeLength = (Double)( jBridgeLength.getValue() );
+        ( (Bridge)models.get(number) ).bridgeLevel = (Double)( jBridgeLevel.getValue() );
+        ( (Bridge)models.get(number) ).bridgeWidth = (Double)( jBridgeWidth.getValue() );
+        ( (Bridge)models.get(number) ).supportHeight = (Double)( jSupportHeight.getValue() );
+        ( (Bridge)models.get(number) ).supportThick = (Double)( jSupportThick.getValue() );
+        ( (Bridge)models.get(number) ).lowerSupportHeight = (Double)( jLowerSupportHeight.getValue() );
+        ( (Bridge)models.get(number) ).lowerSupportThick = (Double)( jLowerSupportThick.getValue() );
+        ( (Bridge)models.get(number) ).lowerSupportWidth = (Double)( jLowerSupportWidth.getValue() );
+        ( (Bridge)models.get(number) ).firstHoleHeight = (Double)( jFirstHoleHeight.getValue() );
+        ( (Bridge)models.get(number) ).secondHoleHeight = (Double)( jSecondHoleHeight.getValue() );
+        ( (Bridge)models.get(number) ).thirdHoleHeight = (Double)( jThirdHoleHeight.getValue() );
+        ( (Bridge)models.get(number) ).bindingHeight = (Double)( jBindingHeight.getValue() );
+        ( (Bridge)models.get(number) ).metalHeight = (Double)( jMetalHeight.getValue() );
+        ( (Bridge)models.get(number) ).metalWidth = (Double)( jMetalWidth.getValue() );
+        ( (Bridge)models.get(number) ).countThirdHole = (int)( jCountHole.getValue() );
+        ( (Bridge)models.get(number) ).countRope = (int)( jCountRope.getValue() );
         
     }
     /**
@@ -1019,12 +1153,12 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     
     private void setModelEdit(){
         if(model != null){
-            eWorldX.setValue(model.worldX);
-            eWorldY.setValue(model.worldY);
-            eWorldZ.setValue(model.worldZ);
-            eWorldAngleX.setValue(model.angleX);
-            eWorldAngleY.setValue(model.angleY);
-            eWorldAngleZ.setValue(model.angleZ);
+            jEWorldX.setValue(model.worldX);
+            jEWorldY.setValue(model.worldY);
+            jEWorldZ.setValue(model.worldZ);
+            jEWorldAngleX.setValue(model.angleX);
+            jEWorldAngleY.setValue(model.angleY);
+            jEWorldAngleZ.setValue(model.angleZ);
         }
     }
     
@@ -1058,27 +1192,27 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bChangeModel;
     private javax.swing.JToggleButton bCreateModel;
-    private javax.swing.JFormattedTextField bindingHeight;
-    private javax.swing.JFormattedTextField bridgeLength;
-    private javax.swing.JFormattedTextField bridgeLevel;
-    private javax.swing.JFormattedTextField bridgeWidth;
-    private javax.swing.JFormattedTextField countHole;
-    private javax.swing.JFormattedTextField countRope;
     private javax.swing.JFormattedTextField eCamAngleX;
     private javax.swing.JFormattedTextField eCamAngleY;
     private javax.swing.JFormattedTextField eCamAngleZ;
     private javax.swing.JFormattedTextField eCameraX;
     private javax.swing.JFormattedTextField eCameraY;
     private javax.swing.JFormattedTextField eCameraZ;
-    private javax.swing.JFormattedTextField eWorldAngleX;
-    private javax.swing.JFormattedTextField eWorldAngleY;
-    private javax.swing.JFormattedTextField eWorldAngleZ;
-    private javax.swing.JFormattedTextField eWorldX;
     private javax.swing.JFormattedTextField eWorldX3;
-    private javax.swing.JFormattedTextField eWorldY;
-    private javax.swing.JFormattedTextField eWorldZ;
-    private javax.swing.JFormattedTextField firstHoleHeight;
+    private javax.swing.JSpinner jBindingHeight;
+    private javax.swing.JSpinner jBridgeLength;
+    private javax.swing.JSpinner jBridgeLevel;
+    private javax.swing.JSpinner jBridgeWidth;
     private javax.swing.JButton jButton1;
+    private javax.swing.JSpinner jCountHole;
+    private javax.swing.JSpinner jCountRope;
+    private javax.swing.JSpinner jEWorldAngleX;
+    private javax.swing.JSpinner jEWorldAngleY;
+    private javax.swing.JSpinner jEWorldAngleZ;
+    private javax.swing.JSpinner jEWorldX;
+    private javax.swing.JSpinner jEWorldY;
+    private javax.swing.JSpinner jEWorldZ;
+    private javax.swing.JSpinner jFirstHoleHeight;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
@@ -1114,29 +1248,29 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jLoadScene;
+    private javax.swing.JSpinner jLowerSupportHeight;
+    private javax.swing.JSpinner jLowerSupportThick;
+    private javax.swing.JSpinner jLowerSupportWidth;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JSpinner jMetalHeight;
+    private javax.swing.JSpinner jMetalWidth;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JMenuItem jSaveScene;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSpinner jSecondHoleHeight;
     private javax.swing.JComboBox<String> jSelectModel;
+    private javax.swing.JSpinner jSupportHeight;
+    private javax.swing.JSpinner jSupportThick;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JFormattedTextField lowerSupportHeight;
-    private javax.swing.JFormattedTextField lowerSupportThick;
-    private javax.swing.JFormattedTextField lowerSupportWidth;
-    private javax.swing.JFormattedTextField metalHeight;
-    private javax.swing.JFormattedTextField metalWidth;
-    private javax.swing.JFormattedTextField secondHoleHeight;
-    private javax.swing.JFormattedTextField supportHeight;
-    private javax.swing.JFormattedTextField supportThick;
-    private javax.swing.JFormattedTextField thirdHoleHeight;
+    private javax.swing.JSpinner jThirdHoleHeight;
     private javax.swing.JPanel workPanel;
     // End of variables declaration//GEN-END:variables
 }

@@ -77,7 +77,7 @@ public class Check {
         boolean result = false;
         
         if(bridgeWidth > 0 && (bridgeWidth >= lowerSupportWidth / 2.5 - supportWidth
-                || bridgeWidth <= lowerSupportWidth / 2.5 + supportWidth) )
+                && bridgeWidth <= lowerSupportWidth / 2.5 + supportWidth) )
             result = true;
         
         return result;
