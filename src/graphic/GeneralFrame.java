@@ -79,15 +79,28 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         camera.height = 300;   
         camera.x = 200;
         
-        camera.y = 200;
-        camera.z = -700;
+        camera.y = 0;
+        camera.z = 700;
         camera.d = Math.sqrt(camera.x*camera.x + camera.y*camera.y + camera.z*camera.z);
         jSelectModel.removeAllItems();
-        Bridge b = new Bridge(200, 200, 200, "Мост" + models.size());
+        Bridge b = new Bridge(200, 0, 200, "Мост" + models.size());
         b.createModel();
         models.add( b );
         jSelectModel.addItem(b.getName());
-
+        
+        b = new Bridge(0, 0, 200, "Мост" + models.size());
+        b.createModel();
+        models.add( b );
+        jSelectModel.addItem(b.getName());
+        
+        b = new Bridge(0, 0, 1200, "Мост" + models.size());
+        b.createModel();
+        models.add( b );
+        jSelectModel.addItem(b.getName());
+        
+       
+        camera.e = new Vertex(100, -50, 500);
+        camera.setCamToDot();
         
     }
     

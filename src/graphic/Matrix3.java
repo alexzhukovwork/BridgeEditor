@@ -116,7 +116,7 @@ public class Matrix3 {
     
     public static Matrix3 getCam(double x, double y, double z, 
             double angleX, double angleY, double angleZ, double d){
-        return ( getRotateСam(angleX, angleY, angleZ) ).multiply(getCamCoordinat(-x, -y, -z));//.multiply(GetPerspectiveMatrix());
+        return (getCamCoordinat(x, y, z)).multiply((getRotateСam(angleX, angleY, angleZ)) );//.multiply(GetPerspectiveMatrix());
              //   .multiply(getCamPerspective(d) );
     }
     

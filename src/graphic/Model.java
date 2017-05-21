@@ -34,23 +34,23 @@ public class Model implements Coordinats, Serializable{
         return name;
     }
     
-    public List<Triangle> getMatrix(){
+    public Matrix3 getMatrix(){
         double x = Math.toRadians(angleX);
         double y = Math.toRadians(angleY);
         double z = Math.toRadians(angleZ);
-        Matrix3 newCoordinats =  Matrix3.getRotate(x, y, z).multiply( Matrix3.getZoom(dx, dy, dz) )
+        return Matrix3.getRotate(x, y, z).multiply( Matrix3.getZoom(dx, dy, dz) )
                 .multiply(Matrix3.getWorld(worldX, worldY, worldZ));
-        List<Triangle> newTriangles = new ArrayList<>();
-   
-        
-        for(Triangle t : triangles){
-            Vertex v1 = newCoordinats.transform(t.v1);
-            Vertex v2 = newCoordinats.transform(t.v2);
-            Vertex v3 = newCoordinats.transform(t.v3);
-            newTriangles.add(new Triangle(v1, v2, v3, t.color));
-        }
-        
-        return newTriangles;
+//        List<Triangle> newTriangles = new ArrayList<>();
+//   
+//        
+//        for(Triangle t : triangles){
+//            Vertex v1 = newCoordinats.transform(t.v1);
+//            Vertex v2 = newCoordinats.transform(t.v2);
+//            Vertex v3 = newCoordinats.transform(t.v3);
+//            newTriangles.add(new Triangle(v1, v2, v3, t.color));
+//        }
+//        
+//        return newTriangles;
     }
 
     @Override

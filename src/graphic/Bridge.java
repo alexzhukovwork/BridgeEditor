@@ -45,6 +45,7 @@ public class Bridge extends Model {
     
     public void createModel(){
         triangles.clear();
+        triangles.addAll( createRectangleWorld(bridgeWidth, bridgeHeight, bridgeLength + 50 , 0, -(lowerSupportHeight/2 + bridgeLevel), 0) );
         triangles.addAll( createRectangleWorld(lowerSupportWidth, lowerSupportHeight, lowerSupportThick, 0, 0, -bridgeLength / 2) );
         triangles.addAll( createRectangleWorld(lowerSupportWidth, lowerSupportHeight, lowerSupportThick, 0, 0, bridgeLength / 2) );
         triangles.addAll( createRectangleWorld(supportWidth, supportHeight, supportThick, 
@@ -52,7 +53,6 @@ public class Bridge extends Model {
         triangles.addAll( createRectangleWorld(supportWidth, supportHeight, supportThick, -lowerSupportWidth / 5, -(lowerSupportHeight/2 + supportHeight / 2), bridgeLength / 2) );
         triangles.addAll( createRectangleWorld(supportWidth, supportHeight, supportThick, lowerSupportWidth / 5, -(lowerSupportHeight/2 + supportHeight / 2), -bridgeLength / 2) );
         triangles.addAll( createRectangleWorld(supportWidth, supportHeight, supportThick, -lowerSupportWidth / 5, -(lowerSupportHeight/2 + supportHeight / 2), -bridgeLength / 2) );
-        triangles.addAll( createRectangleWorld(bridgeWidth, bridgeHeight, bridgeLength + 50 , 0, -(lowerSupportHeight/2 + bridgeLevel), 0) );
         createMetal();
         createHole();
         createInclineSupport();
