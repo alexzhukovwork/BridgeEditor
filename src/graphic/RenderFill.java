@@ -39,8 +39,6 @@ public class RenderFill implements Serializable, IRender {
             int i = 0;
             Matrix3 transform = m.getMatrix().multiply(cam);
            for (Triangle t : m.triangles) {
-
-                camera.d = Math.sqrt(camera.x*camera.x + camera.y*camera.y + camera.z*camera.z);
                 double d = 1;
                 
                 double a = (1000 + d) / (1000 - d);
@@ -60,43 +58,44 @@ public class RenderFill implements Serializable, IRender {
                 double n = 0;
                 //if(i < 2){
                 if(v1.z >= 0 && (v2.z < 0 || v3.z < 0)){
-//                    if(v2.z < 0){
-//                        v = Vertex.getE( Vertex.getVector(v2, v1) );
-//                        n = v.z / -1;
-//                        v1 = Vertex.getVectorE( Vertex.multiply(v, 500), v2);  
-//                    }
-//                    else{
-//                       v = Vertex.getE( Vertex.getVector(v3, v1) ); 
-//                       n = v.z / -1;
-//                       v1 = Vertex.getVectorE( Vertex.multiply(v, 500), v3);
-//                    }    
-                    v1.z = -1;
+                    if(v2.z < 0){
+                        v = Vertex.getE( Vertex.getVector(v2, v1) );
+                        n = -(v2.z + 1) / v.z;
+                        v1 = Vertex.getVectorE( Vertex.multiply(v, n), v2);  
+                    }
+                    if(v3.z < 0){
+                       v = Vertex.getE( Vertex.getVector(v3, v1) ); 
+                       n = -(v3.z + 1) / v.z;
+                       v1 = Vertex.getVectorE( Vertex.multiply(v, n), v3);
+                    }    
+                 //   v1.z = -1;
                 }
                 if(v2.z >= 0 && (v1.z < 0 || v3.z < 0)){
-//                    if(v1.z < 0){
-//                        v = Vertex.getE( Vertex.getVector(v1, v2) );
-//                        n = v.z / -1;
-//                        v2 = Vertex.getVectorE( Vertex.multiply(v, 500), v1);
-//                    }
-//                    else{
-//                       v = Vertex.getE( Vertex.getVector(v3, v2) ); 
-//                       n = v.z / -1;
-//                       v2 = Vertex.getVectorE( Vertex.multiply(v, 500), v3);
-//                    }
-                    v2.z = -1;
+                    if(v1.z < 0){
+                        v = Vertex.getE( Vertex.getVector(v1, v2) );
+                        n = -(v1.z + 1) / v.z;
+                        v2 = Vertex.getVectorE( Vertex.multiply(v, n), v1);
+                    }
+                    if(v2.z < 0){
+                       v = Vertex.getE( Vertex.getVector(v3, v2) ); 
+                       n = -(v3.z + 1) / v.z;
+                       v2 = Vertex.getVectorE( Vertex.multiply(v, n), v3);
+                    }
+       //             v2.z = -1;
                 }
                 if(v3.z >= 0 && (v2.z < 0 || v1.z < 0)){
-//                    if(v1.z < 0){
-//                        v = Vertex.getE( Vertex.getVector(v1, v3) );
-//                        n = v.z / -1;
-//                        v3 = Vertex.getVectorE( Vertex.multiply(v, 500), v1);
-//                    }
-//                    else{
-//                       v = Vertex.getE( Vertex.getVector(v2, v3) ); 
-//                       n =  v.z / -1;
-//                       v3 = Vertex.getVectorE( Vertex.multiply(v, 500), v2);
-//                    }
-                    v3.z = -1;
+                    if(v1.z < 0){
+                        v = Vertex.getE( Vertex.getVector(v1, v3) );
+                        n = -(v1.z + 1) / v.z;
+                        v3 = Vertex.getVectorE( Vertex.multiply(v, n), v1);
+                    }
+                    if(v2.z < 0){
+                       v = Vertex.getE( Vertex.getVector(v2, v3) ); 
+                       n =  -(v2.z + 1) / v.z;
+                       v3 = Vertex.getVectorE( Vertex.multiply(v, n), v2);
+                    }
+                    System.out.println(n);
+                 //   v3.z = -1;
                 }
                 
                 //}
