@@ -40,17 +40,6 @@ public class Model implements Coordinats, Serializable{
         double z = Math.toRadians(angleZ);
         return Matrix3.getRotate(x, y, z).multiply( Matrix3.getZoom(dx, dy, dz) )
                 .multiply(Matrix3.getWorld(worldX, worldY, worldZ));
-//        List<Triangle> newTriangles = new ArrayList<>();
-//   
-//        
-//        for(Triangle t : triangles){
-//            Vertex v1 = newCoordinats.transform(t.v1);
-//            Vertex v2 = newCoordinats.transform(t.v2);
-//            Vertex v3 = newCoordinats.transform(t.v3);
-//            newTriangles.add(new Triangle(v1, v2, v3, t.color));
-//        }
-//        
-//        return newTriangles;
     }
 
     @Override
@@ -82,6 +71,26 @@ public class Model implements Coordinats, Serializable{
         double localX, double localY, double localZ){
         List<Triangle> triangles = new ArrayList<>();
         triangles = createRectangle(width, height, thick);
+        for(Triangle t : triangles){
+            t.v1.x += localX;
+            t.v1.y += localY;
+            t.v1.z += localZ;
+
+            t.v2.x += localX;
+            t.v2.y += localY;
+            t.v2.z += localZ;
+
+            t.v3.x += localX;
+            t.v3.y += localY;
+            t.v3.z += localZ;
+        }
+        return triangles;
+    }
+    
+    protected List<Triangle> createRectangleWorld(double width, double height, double thick,
+        double localX, double localY, double localZ, double countZ){
+        List<Triangle> triangles = new ArrayList<>();
+        triangles = createRectangle(width, height, thick, countZ);
         for(Triangle t : triangles){
             t.v1.x += localX;
             t.v1.y += localY;
@@ -157,6 +166,82 @@ public class Model implements Coordinats, Serializable{
         double y = height / 2.0;
         double z = thick / 2.0; 
         
+        List <Triangle> triangles = new ArrayList<Triangle>();
+        for(double i = -y; i < y; i += height)
+            for(double j = -x; j < x; j += width)
+                for(double k = -z; k < z; k += thick){
+                    triangles.add( new Triangle(
+                        new Vertex(j + width , -y, k       ),
+                        new Vertex(j        , -y, k       ),
+                        new Vertex(j        , -y, k + thick),
+                        Color.black) );
+                    triangles.add( new Triangle(
+                        new Vertex(j + width, -y, k + thick),
+                        new Vertex(j + width, -y, k       ),
+                        new Vertex(j        , -y, k + thick),
+                        Color.black) );
+                    triangles.add( new Triangle(
+                        new Vertex(j + width, y, k       ),
+                        new Vertex(j        , y, k       ),
+                        new Vertex(j        , y, k + thick),
+                        Color.black) );
+                    triangles.add( new Triangle(
+                        new Vertex(j + width, y, k + thick),
+                        new Vertex(j + width, y, k       ),
+                        new Vertex(j        , y, k + thick),
+                        Color.black) );
+
+                    triangles.add( new Triangle(
+                        new Vertex(x, i + height, k       ),
+                        new Vertex(x, i         , k       ),
+                        new Vertex(x, i         , k + thick),
+                        Color.red) );
+                    triangles.add( new Triangle(
+                        new Vertex(x, i + height, k + thick),
+                        new Vertex(x, i + height, k       ),
+                        new Vertex(x, i         , k + thick),
+                        Color.red) );
+                    triangles.add( new Triangle(
+                        new Vertex(-x, i + height, k       ),
+                        new Vertex(-x, i         , k       ),
+                        new Vertex(-x, i         , k + thick),
+                        Color.red) );
+                    triangles.add( new Triangle(
+                        new Vertex(-x, i + height, k + thick),
+                        new Vertex(-x, i + height, k       ),
+                        new Vertex(-x, i         , k + thick),
+                        Color.red) );
+                    
+                    triangles.add( new Triangle(
+                        new Vertex(j        , i + height, z),
+                        new Vertex(j        , i         , z),
+                        new Vertex(j + width, i         , z),
+                        Color.white) );
+                    triangles.add( new Triangle(
+                        new Vertex(j + width, i + height, z),
+                        new Vertex(j        , i + height, z),
+                        new Vertex(j + width, i         , z),
+                        Color.white) );
+                    triangles.add( new Triangle(
+                        new Vertex(j        , i + height, -z),
+                        new Vertex(j        , i         , -z),
+                        new Vertex(j + width, i         , -z),
+                        Color.white) );
+                    triangles.add( new Triangle(
+                        new Vertex(j + width, i + height, -z),
+                        new Vertex(j        , i + height, -z),
+                        new Vertex(j + width, i         , -z),
+                        Color.white) );
+                }
+        return triangles; 
+    }
+    
+    protected List<Triangle> createRectangle(double width, double height, double thick, double countZ){
+      
+        double x = width / 2.0;
+        double y = height / 2.0;
+        double z = thick / 2.0; 
+        thick /= countZ;
         List <Triangle> triangles = new ArrayList<Triangle>();
         for(double i = -y; i < y; i += height)
             for(double j = -x; j < x; j += width)

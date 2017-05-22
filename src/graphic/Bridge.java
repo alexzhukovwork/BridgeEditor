@@ -45,7 +45,7 @@ public class Bridge extends Model {
     
     public void createModel(){
         triangles.clear();
-        triangles.addAll( createRectangleWorld(bridgeWidth, bridgeHeight, bridgeLength + 50 , 0, -(lowerSupportHeight/2 + bridgeLevel), 0) );
+        triangles.addAll( createRectangleWorld(bridgeWidth, bridgeHeight, bridgeLength + 50 , 0, -(lowerSupportHeight/2 + bridgeLevel), 0, 100) );
         triangles.addAll( createRectangleWorld(lowerSupportWidth, lowerSupportHeight, lowerSupportThick, 0, 0, -bridgeLength / 2) );
         triangles.addAll( createRectangleWorld(lowerSupportWidth, lowerSupportHeight, lowerSupportThick, 0, 0, bridgeLength / 2) );
         triangles.addAll( createRectangleWorld(supportWidth, supportHeight, supportThick, 
@@ -373,8 +373,8 @@ public class Bridge extends Model {
         double step = fanceDistance;
         double heightFance = 1; 
         System.out.println("height: " + heightFance);
-        triangles.addAll( createRectangleWorld(fanceParam, fanceParam, bridgeLength, x , y, 0) );
-        triangles.addAll( createRectangleWorld(fanceParam, fanceParam, bridgeLength, -x , y, 0) );
+        triangles.addAll( createRectangleWorld(fanceParam, fanceParam, bridgeLength, x , y, 0, 100) );
+        triangles.addAll( createRectangleWorld(fanceParam, fanceParam, bridgeLength, -x , y, 0, 100) );
         for(double i = -bridgeLength / 2; i < bridgeLength / 2; i += step){
             triangles.addAll( createRectangleWorld(fanceParam, heightFance, fanceParam, x , y + heightFance / 2, i) );
             triangles.addAll( createRectangleWorld(fanceParam, heightFance, fanceParam, -x , y + heightFance / 2, i) );
