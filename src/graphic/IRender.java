@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface IRender {
     public void setRender(Graphics2D g2);
-    public BufferedImage getImage(List<Model> models, int height, int width, Camera camera);
+    public BufferedImage getImage(List<Model> models, int height, int width, Camera camera, boolean center);
 }

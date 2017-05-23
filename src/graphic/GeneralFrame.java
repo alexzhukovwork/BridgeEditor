@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
@@ -43,6 +45,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
@@ -57,6 +60,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     /**
      * Creates new form GeneralFrame
      */
+    private boolean center = true;
     private Model model;
     private List<Model> models = new ArrayList<>();
     private int number = 0;
@@ -78,30 +82,20 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         setPaint();
         setKeyListener();
         camera = new Camera();
-        
+        setDefaultValue();
         camera.width = 600;
         camera.height = 300;   
         camera.x = 200;
         
         camera.y = 0;
-        camera.z = 700;
-        camera.d = Math.sqrt(camera.x*camera.x + camera.y*camera.y + camera.z*camera.z);
+        camera.z = 0;
+       
+        
         jSelectModel.removeAllItems();
-        Bridge b = new Bridge(200, 0, 200, "Мост" + models.size());
-        b.createModel();
-        models.add( b );
-        jSelectModel.addItem(b.getName());
-        
-        b = new Bridge(0, 0, 200, "Мост" + models.size());
-        b.createModel();
-        models.add( b );
-        jSelectModel.addItem(b.getName());
-        
-        b = new Bridge(0, 0, 1200, "Мост" + models.size());
-        b.createModel();
-        models.add( b );
-        jSelectModel.addItem(b.getName());  
+
     }
+    
+
     
     private void setSelectListener(){
         JFrame jFrame = this;
@@ -123,12 +117,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         double min = 1;
         double max = 10000;
         double step = 1;
-        spinners.add(jEWorldX);
-        spinners.add(jEWorldY);
-        spinners.add(jEWorldZ);
-        spinners.add(jEWorldAngleX);
-        spinners.add(jEWorldAngleY);
-        spinners.add(jEWorldAngleZ);
+        
         spinners.add(jBindingHeight);
         spinners.add(jBridgeLength);
         spinners.add(jBridgeLevel);
@@ -151,8 +140,20 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         }
         
         min = -10000;
-       
+        v = 0;
         SpinnerNumberModel spinnerModel = new SpinnerNumberModel(v,min,max,step);
+        jEWorldX.setModel(spinnerModel);
+        jEWorldX.setEditor(new JSpinner.NumberEditor(jEWorldX, "#0.000"));
+        
+        spinnerModel = new SpinnerNumberModel(v,min,max,step);
+        jEWorldY.setModel(spinnerModel);
+        jEWorldY.setEditor(new JSpinner.NumberEditor(jEWorldY, "#0.000"));
+        
+        spinnerModel = new SpinnerNumberModel(v,min,max,step);
+        jEWorldZ.setModel(spinnerModel);
+        jEWorldZ.setEditor(new JSpinner.NumberEditor(jEWorldZ, "#0.000"));
+        
+        spinnerModel = new SpinnerNumberModel(v,min,max,step);
         jTargetX.setModel(spinnerModel);
         jTargetX.setEditor(new JSpinner.NumberEditor(jTargetX, "#0.000"));
         spinnerModel = new SpinnerNumberModel(v,min,max,step);
@@ -182,7 +183,16 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         spinnerModel = new SpinnerNumberModel(v,min,max,step);
         jCameraAngleY.setModel(spinnerModel);
         jCameraAngleY.setEditor(new JSpinner.NumberEditor(jCameraAngleY, "#0.000"));
-
+        
+        spinnerModel = new SpinnerNumberModel(v,min,max,step);
+        jEWorldAngleX.setModel(spinnerModel);
+        jEWorldAngleX.setEditor(new JSpinner.NumberEditor(jEWorldAngleX, "#0.000"));
+        spinnerModel = new SpinnerNumberModel(v,min,max,step);
+        jEWorldAngleY.setModel(spinnerModel);
+        jEWorldAngleY.setEditor(new JSpinner.NumberEditor(jEWorldAngleY, "#0.000"));
+        spinnerModel = new SpinnerNumberModel(v,min,max,step);
+        jEWorldAngleZ.setModel(spinnerModel);
+        jEWorldAngleZ.setEditor(new JSpinner.NumberEditor(jEWorldAngleZ, "#0.000"));
         
         max = 10;
         min = 0.001;
@@ -221,6 +231,13 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         jLabel30 = new javax.swing.JLabel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jSplitPane6 = new javax.swing.JSplitPane();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
         workPanel = new javax.swing.JPanel();
         jSelectModel = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -295,6 +312,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         jSplitPane19 = new javax.swing.JSplitPane();
         jLabel39 = new javax.swing.JLabel();
         jScaleZ = new javax.swing.JSpinner();
+        jDelete = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
@@ -331,7 +349,6 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         jSplitPane10 = new javax.swing.JSplitPane();
         jLabel36 = new javax.swing.JLabel();
         jTargetZ = new javax.swing.JSpinner();
-        jChangeCamera = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jSaveScene = new javax.swing.JMenuItem();
@@ -339,6 +356,9 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         jInternalFrame1.setVisible(true);
 
@@ -374,17 +394,31 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
 
         jLabel30.setText("angleX");
 
+        jMenuItem3.setText("jMenuItem3");
+
+        jMenuItem4.setText("jMenuItem4");
+
+        jMenuItem5.setText("jMenuItem5");
+
+        jMenuItem6.setText("jMenuItem6");
+
+        jMenu4.setText("File");
+        jMenuBar2.add(jMenu4);
+
+        jMenu5.setText("Edit");
+        jMenuBar2.add(jMenu5);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout workPanelLayout = new javax.swing.GroupLayout(workPanel);
         workPanel.setLayout(workPanelLayout);
         workPanelLayout.setHorizontalGroup(
             workPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 636, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         workPanelLayout.setVerticalGroup(
             workPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 463, Short.MAX_VALUE)
         );
 
         jSelectModel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -484,6 +518,13 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         jSplitPane19.setLeftComponent(jLabel39);
         jSplitPane19.setRightComponent(jScaleZ);
 
+        jDelete.setText("Удалить");
+        jDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDeleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -573,19 +614,20 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(bChangeModel, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(bCreateModel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bChangeModel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bCreateModel, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jSplitPane17)
+                                .addComponent(jSplitPane17, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jSplitPane18, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jSplitPane19, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)))
-                        .addGap(0, 9, Short.MAX_VALUE))))
+                                .addComponent(jSplitPane19, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 21, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -613,7 +655,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(9, 9, 9)
                                 .addComponent(jLabel5)
-                                .addGap(9, 9, 9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel4)
                                 .addGap(12, 12, 12))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -722,7 +764,8 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bChangeModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bCreateModel))
+                    .addComponent(bCreateModel)
+                    .addComponent(jDelete))
                 .addContainerGap())
         );
 
@@ -730,7 +773,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
 
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        jLabel21.setText("Камера");
+        jLabel21.setText("Позиция камеры");
 
         jTargetButton.setText("Применить");
         jTargetButton.addActionListener(new java.awt.event.ActionListener() {
@@ -784,90 +827,67 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         jSplitPane10.setLeftComponent(jLabel36);
         jSplitPane10.setRightComponent(jTargetZ);
 
-        jChangeCamera.setText("Применить");
-        jChangeCamera.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jChangeCameraActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(19, 19, 19)
+                .addComponent(jLabel21)
+                .addGap(18, 18, 18)
+                .addComponent(jSplitPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSplitPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSplitPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSplitPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSplitPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSplitPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jSplitPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTargetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(145, 145, 145)
+                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(149, 149, 149)
-                        .addComponent(jLabel21))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(jChangeCamera, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jSplitPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSplitPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSplitPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSplitPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addComponent(jSplitPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSplitPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(92, 92, 92)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel25))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTargetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jSplitPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)
+                                .addComponent(jLabel25)))))
+                .addGap(0, 0, 0))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel25)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSplitPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSplitPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21)
+                    .addComponent(jSplitPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSplitPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSplitPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSplitPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSplitPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jSplitPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(31, 31, 31)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jSplitPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(18, 18, 18)
-                        .addComponent(jChangeCamera)
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jSplitPane8)
-                                    .addComponent(jSplitPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(20, 20, 20)
-                                .addComponent(jTargetButton))
-                            .addComponent(jSplitPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel25)
-                        .addGap(238, 238, 238)
+                            .addComponent(jSplitPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSplitPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(13, 13, 13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTargetButton)
+                .addContainerGap())
         );
 
         jScrollPane2.setViewportView(jPanel2);
@@ -892,9 +912,9 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("Вид");
+        jMenu3.setText("Проецирование");
 
-        jMenuItem1.setText("Твердотельная модель");
+        jMenuItem1.setText("Центральное");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -902,7 +922,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         });
         jMenu3.add(jMenuItem1);
 
-        jMenuItem2.setText("Каркасная модель");
+        jMenuItem2.setText("Параллельное");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -912,6 +932,26 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
 
         jMenuBar1.add(jMenu3);
 
+        jMenu6.setText("Вид");
+
+        jMenuItem8.setText("Твердотельный");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem8);
+
+        jMenuItem7.setText("Поверхностный");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem7);
+
+        jMenuBar1.add(jMenu6);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -919,24 +959,30 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(workPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE))
+                    .addComponent(workPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jSelectModel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
                 .addGap(8, 8, 8))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(workPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSelectModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSelectModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(workPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -945,14 +991,14 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
 
     private boolean check(){
         boolean result = true;
-        
+        Bridge b = new Bridge(0, 0, 0, "Мост");
         if( !Check.holes(
                 (Double)(jFirstHoleHeight.getValue()),
                 (Double)(jSecondHoleHeight.getValue()),
                 (Double)(jThirdHoleHeight.getValue()),
                 (Double)(jSupportHeight.getValue()),
                 (Double)(jBridgeLevel.getValue()),
-                ((Bridge)model).bridgeHeight,
+                 b.bridgeHeight,
                 (int)(jCountHole.getValue()) 
         ) ){
             JOptionPane.showMessageDialog(this, 
@@ -986,7 +1032,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
             result = false;
         }
         
-        if( !Check.bridgeWidth((Double)jBridgeWidth.getValue(), ((Bridge)model).supportWidth,
+        if( !Check.bridgeWidth((Double)jBridgeWidth.getValue(), b.supportWidth,
                 (Double)jLowerSupportWidth.getValue()) ){
             JOptionPane.showMessageDialog(this, 
                     "Ширина моста не должна превышать ширину 3х опор", 
@@ -1098,18 +1144,23 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     }//GEN-LAST:event_jLoadSceneActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        render = new RenderFill();
+        center = true;
         workPanel.repaint();
         this.requestFocus();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        render = new RenderCabel();
+        center = false;
         workPanel.repaint();
         this.requestFocus();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jTargetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTargetButtonActionPerformed
+        camera.angleX = (Double)jCameraAngleX.getValue();
+        camera.angleY = (Double)jCameraAngleY.getValue();
+        camera.x = (Double)jCameraX.getValue();
+        camera.y = -(Double)jCameraY.getValue();
+        camera.z = (Double)jCameraZ.getValue();
         camera.e.x = (Double)jTargetX.getValue();
         camera.e.y = (Double)jTargetY.getValue();
         camera.e.z = (Double)jTargetZ.getValue();
@@ -1123,13 +1174,19 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     }//GEN-LAST:event_eCamAngleYActionPerformed
 
     private void bChangeModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bChangeModelActionPerformed
-        if(!check()) return;
+
         if( !models.isEmpty() ){
+            if(!check()) return;
             setModelParam(jSelectModel.getSelectedIndex());
             model = models.get(jSelectModel.getSelectedIndex());
             ( (Bridge)model ).createModel();
             workPanel.repaint();
             this.requestFocus();
+        } else {
+            JOptionPane.showMessageDialog(this, 
+                    "Модель отсутствует", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_bChangeModelActionPerformed
 
@@ -1150,16 +1207,40 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         this.requestFocus();
     }//GEN-LAST:event_bCreateModelActionPerformed
 
-    private void jChangeCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeCameraActionPerformed
-        camera.angleX = (Double)jCameraAngleX.getValue();
-        camera.angleY = (Double)jCameraAngleY.getValue();
-        camera.x = (Double)jCameraX.getValue();
-        camera.y = -(Double)jCameraY.getValue();
-        camera.z = (Double)jCameraZ.getValue();
-        workPanel.repaint();
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        render = new RenderCabel();
         this.requestFocus();
-    }//GEN-LAST:event_jChangeCameraActionPerformed
+        workPanel.repaint();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        render = new RenderFill();
+        this.requestFocus();
+        workPanel.repaint();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeleteActionPerformed
+        if(models.isEmpty()) return;
+        models.remove(jSelectModel.getSelectedIndex());
+        jSelectModel.remove(jSelectModel.getSelectedIndex());
+        
+        if(!models.isEmpty()){
+            jSelectModel.setSelectedIndex(0);
+            model = models.get(0);
+            getModelParam(0);
+        }else{
+            setDefaultValue();
+        }
+
+        this.requestFocus();
+        workPanel.repaint();
+    }//GEN-LAST:event_jDeleteActionPerformed
+
+    private void setDefaultValue(){
+       models.add(new Bridge(0, 0, 0, "Мост"));
+       getModelParam(0);
+       models.remove(0); 
+    }
     private void getModelParam(int number){
         jEWorldX.setValue( models.get(number).worldX );
         jEWorldY.setValue( models.get(number).worldY );
@@ -1432,7 +1513,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
 
                 if( !models.isEmpty() ){
                     g2.drawImage( render.getImage(models, getHeight(), getWidth(), 
-                            camera ), 0, 0, null);
+                            camera, center ), 0, 0, null);
                 }
             }
         };
@@ -1468,9 +1549,9 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     private javax.swing.JSpinner jCameraX;
     private javax.swing.JSpinner jCameraY;
     private javax.swing.JSpinner jCameraZ;
-    private javax.swing.JButton jChangeCamera;
     private javax.swing.JSpinner jCountHole;
     private javax.swing.JSpinner jCountRope;
+    private javax.swing.JButton jDelete;
     private javax.swing.JSpinner jEWorldAngleX;
     private javax.swing.JSpinner jEWorldAngleY;
     private javax.swing.JSpinner jEWorldAngleZ;
@@ -1526,9 +1607,19 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JSpinner jMetalHeight;
     private javax.swing.JSpinner jMetalWidth;
     private javax.swing.JPanel jPanel1;
