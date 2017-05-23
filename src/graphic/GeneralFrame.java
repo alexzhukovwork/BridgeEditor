@@ -104,6 +104,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED && jSelectModel.getSelectedIndex() > -1 && !models.isEmpty() ){
                     model = models.get( jSelectModel.getSelectedIndex() );
+                    System.out.println("changed");
                     getModelParam( jSelectModel.getSelectedIndex() );
                     jFrame.requestFocus();
                     workPanel.repaint();
@@ -409,6 +410,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         jMenuBar2.add(jMenu5);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1800, 800));
 
         javax.swing.GroupLayout workPanelLayout = new javax.swing.GroupLayout(workPanel);
         workPanel.setLayout(workPanelLayout);
@@ -1222,7 +1224,6 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     private void jDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeleteActionPerformed
         if(models.isEmpty()) return;
         models.remove(jSelectModel.getSelectedIndex());
-        jSelectModel.remove(jSelectModel.getSelectedIndex());
         
         if(!models.isEmpty()){
             jSelectModel.setSelectedIndex(0);
@@ -1231,6 +1232,9 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         }else{
             setDefaultValue();
         }
+        
+        jSelectModel.removeAllItems();
+        setListBox();
 
         this.requestFocus();
         workPanel.repaint();
@@ -1473,6 +1477,8 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
             models.add( (Model)oin.readObject() );
         camera = (Camera)oin.readObject();
         setListBox();
+        camera.setCamToDot();
+        this.requestFocus();
         workPanel.repaint();
     }
     

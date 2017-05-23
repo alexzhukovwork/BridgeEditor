@@ -40,10 +40,14 @@ public class RenderFill implements Serializable, IRender {
                 Vertex v2 = transform.transform(t.v2);
                 Vertex v3 = transform.transform(t.v3);
                 
-                if(v1.z > 0 || v2.z > 0 || v3.z > 0)
-                    continue;
+//                if( Vertex.multiplyScalar( 
+//                       Matrix3.getRotateСam(camera.angleX, camera.angleY, 0).transform(new Vertex(camera.x, camera.y, camera.z) ),
+//                        Vertex.normalize(v1, v2, v3), v1 ) > 0)
+//                    continue;
                 
-                if(center){         
+                if(center){   
+                    if(v1.z > 0 || v2.z > 0 || v3.z > 0)
+                        continue;
                     double d = 1; 
                     double a = (1000 + d) / (1000 - d);
                     double b = -2 * 1000 * d / (1000 - d);
@@ -70,13 +74,22 @@ public class RenderFill implements Serializable, IRender {
                     v2.y += height / 2 + v2.y*d/(v2.z + d);
                     v3.x += width / 2 + v3.x*d/(v3.z + d);
                     v3.y += height / 2 + v3.y*d/(v3.z + d);
+                } else {
+                    v1.x += width / 2;
+                    v1.y += height / 2;
+                    v2.x += width / 2;
+                    v2.y += height / 2;
+                    v3.x += width / 2;
+                    v3.y += height /2;
                 }
                 
                 int minX = (int) Math.max(0, Math.ceil(Math.min(v1.x, Math.min(v2.x, v3.x))));
                 int maxX = (int) Math.min(img.getWidth() - 1, Math.floor(Math.max(v1.x, Math.max(v2.x, v3.x))));
                 int minY = (int) Math.max(0, Math.ceil(Math.min(v1.y, Math.min(v2.y, v3.y))));
                 int maxY = (int) Math.min(img.getHeight() - 1, Math.floor(Math.max(v1.y, Math.max(v2.y, v3.y))));
-
+                 //double cos = Math.abs( Vertex.multiplyScalar( 
+                   //     new Vertex(0, 0, 0),
+                   //     Vertex.normalize(v1, v2, v3), v1 ) );
                 double triangleArea = (v1.y - v3.y) * (v2.x - v3.x) + (v2.y - v3.y) * (v3.x - v1.x);
                 for (int y = minY; y <= maxY; y++) {
                     for (int x = minX; x <= maxX; x++) {
@@ -89,6 +102,7 @@ public class RenderFill implements Serializable, IRender {
                             if (zBuffer[zIndex] < depth) {
                                 zBuffer[zIndex] = depth;
                                 colors[zIndex] = t.color.getRGB();
+                               // colors[zIndex] = getShade(t.color, cos).getRGB();
                             }
                         }  
                     }
@@ -101,6 +115,23 @@ public class RenderFill implements Serializable, IRender {
 
     @Override
     public void setRender(Graphics2D g2) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    }
+    
+    public static Color getShade(Color color, double shade) {
+
+        double redLinear = Math.pow(color.getRed(), 2.4) * shade;
+
+        double greenLinear = Math.pow(color.getGreen(), 2.4) * shade;
+
+        double blueLinear = Math.pow(color.getBlue(), 2.4) * shade;
+
+        int red = (int) Math.pow(redLinear, 1/2.4);
+
+        int green = (int) Math.pow(greenLinear, 1/2.4);
+
+        int blue = (int) Math.pow(blueLinear, 1/2.4);
+
+        return new Color(red, green, blue);
     }
 }
