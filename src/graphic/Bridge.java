@@ -1,24 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphic;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Алексей
- */
+
 public class Bridge extends Model {
     double lowerSupportWidth = 30;
     double lowerSupportHeight = 10;
     double lowerSupportThick = 10;
     double supportThick = 10;
-    double supportWidth = 4;
+    double supportWidth = 5;
     double supportHeight = 120;
     double bridgeLength = 500;
     double bridgeWidth = 14;
@@ -36,7 +28,7 @@ public class Bridge extends Model {
     double fanceDistance = 1;
     double fanceParam = 0.2;
     int countThirdHole = 2;
-    int countRope = 0;
+    int countRope = 4;
     
     
     public Bridge(double worldX, double worldY, double worldZ, String name) {
@@ -267,48 +259,6 @@ public class Bridge extends Model {
         triangles.addAll( getRotate(0, -lowerSupportHeight / 2 - cat1 -  2 * metalHeight - cat1, -bridgeLength/2,
                0, 0, 0, 
                 cat2, holeBalkHeight / 2, supportThick) );
-        
-//        
-//        triangles.addAll( getRotate(-cat2/2, -rot / 2 , -bridgeLength/2,
-//                0, 0, angle, 
-//                1, rot, supportThick,
-//                -cat2/2, -lowerSupportHeight/2, -bridgeLength/2) );
-//        triangles.addAll( getRotate(0, -rot / 2 - lowerSupportHeight / 2, - bridgeLength/2,
-//                0, 0, -angle, 
-//                1, rot, supportThick) );
-//        triangles.addAll( getRotate(0, -lowerSupportHeight / 2 - rot - metalHeight / 2, bridgeLength/2,
-//               0, 0, 0, 
-//                cat2, holeBalkHeight / 2, supportThick) );
-//        
-//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + rot/2), -bridgeLength/2,
-//                0, 0, -Math.tan(cat2 / cat1), 
-//                1, rot, supportThick) );
-//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + rot/2), -bridgeLength/2,
-//                0, 0, Math.tan(cat2 / cat1), 
-//                1, rot, supportThick) );
-//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + cat1), -bridgeLength/2,
-//                0, 0, 0, 
-//                cat2, holeBalkHeight / 2, supportThick) );
-//        
-//        triangles.addAll( getRotate(0, -rot / 2 - lowerSupportHeight / 2, bridgeLength/2,
-//                0, 0, -Math.tan(cat2 / cat1), 
-//                1, rot, supportThick) );
-//        triangles.addAll( getRotate(0, -rot / 2 - lowerSupportHeight / 2, bridgeLength/2,
-//                0, 0, Math.tan(cat2 / cat1), 
-//                1, rot, supportThick) );
-//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3), bridgeLength/2,
-//                0, 0, 0, 
-//                cat2, holeBalkHeight / 2, supportThick) );
-//        
-//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + rot/2), bridgeLength/2,
-//                0, 0, -Math.tan(cat2 / cat1), 
-//                1, rot, supportThick) );
-//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + rot/2), bridgeLength/2,
-//                0, 0, Math.tan(cat2 / cat1), 
-//                1, rot, supportThick) );
-//        triangles.addAll( getRotate(0, -(lowerSupportHeight / 2 + holeBalkHeight / 4 +  bridgeLevel / 2 / 1.3 + cat1), bridgeLength/2,
-//                0, 0, 0, 
-//                cat2, holeBalkHeight / 2, supportThick) );
     }
     
     private List<Triangle> getRotate(double x, double y, double z, double angleX, double angleY, double angleZ,

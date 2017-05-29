@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphic;
 
 import static com.sun.javafx.iio.ImageStorage.ImageType.RGB;
@@ -15,17 +10,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Алексей
- */
 public class RenderFill implements Serializable, IRender {
     public BufferedImage getImage(List<Model> models, int height, int width, Camera camera, boolean center){
         
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Matrix3 cam = camera.getCam();
         final int SIZE = width * height;
-        
+        double near = 0;
         double[] zBuffer = new double[SIZE];
         int[] colors = new int[SIZE];
 
@@ -40,14 +31,12 @@ public class RenderFill implements Serializable, IRender {
                 Vertex v2 = transform.transform(t.v2);
                 Vertex v3 = transform.transform(t.v3);
                 
-//                if( Vertex.multiplyScalar( 
-//                       Matrix3.getRotateСam(camera.angleX, camera.angleY, 0).transform(new Vertex(camera.x, camera.y, camera.z) ),
-//                        Vertex.normalize(v1, v2, v3), v1 ) > 0)
-//                    continue;
                 
                 if(center){   
-                    if(v1.z > 0 || v2.z > 0 || v3.z > 0)
+                    
+                    if(v1.z > near || v2.z > near || v3.z > near)
                         continue;
+                    
                     double d = 1; 
                     double a = (1000 + d) / (1000 - d);
                     double b = -2 * 1000 * d / (1000 - d);
@@ -87,9 +76,6 @@ public class RenderFill implements Serializable, IRender {
                 int maxX = (int) Math.min(img.getWidth() - 1, Math.floor(Math.max(v1.x, Math.max(v2.x, v3.x))));
                 int minY = (int) Math.max(0, Math.ceil(Math.min(v1.y, Math.min(v2.y, v3.y))));
                 int maxY = (int) Math.min(img.getHeight() - 1, Math.floor(Math.max(v1.y, Math.max(v2.y, v3.y))));
-                 //double cos = Math.abs( Vertex.multiplyScalar( 
-                   //     new Vertex(0, 0, 0),
-                   //     Vertex.normalize(v1, v2, v3), v1 ) );
                 double triangleArea = (v1.y - v3.y) * (v2.x - v3.x) + (v2.y - v3.y) * (v3.x - v1.x);
                 for (int y = minY; y <= maxY; y++) {
                     for (int x = minX; x <= maxX; x++) {

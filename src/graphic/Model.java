@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphic;
 
 import java.awt.Color;
@@ -10,21 +5,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Алексей
- */
 public class Model implements Coordinats, Serializable{
+    private static final long serialVersionUID = 2467308163590036860L;
     private String name;
-    public List<Triangle> triangles = new ArrayList<>();
-    public double worldX, worldY, worldZ;
-    public double angleX, angleY, angleZ;
-    public double dx, dy, dz;
+    List<Triangle> triangles = new ArrayList<>();
+    double worldX, worldY, worldZ;
+    double angleX, angleY, angleZ;
+    double scaleX, scaleY, scaleZ;
     
     public Model(double worldX, double worldY, double worldZ, String name){
         this.name = name;
         angleX = angleY = angleZ = 0;
-        dx = dy = dz = 1;
+        scaleX = scaleY = scaleZ = 1;
         this.worldX = worldX;
         this.worldY = worldY;
         this.worldZ = worldZ;
@@ -38,7 +30,7 @@ public class Model implements Coordinats, Serializable{
         double x = Math.toRadians(angleX);
         double y = Math.toRadians(angleY);
         double z = Math.toRadians(angleZ);
-        return Matrix3.getRotate(x, y, z).multiply( Matrix3.getZoom(dx, dy, dz) )
+        return Matrix3.getRotate(x, y, z).multiply(Matrix3.getZoom(scaleX, scaleY, scaleZ) )
                 .multiply(Matrix3.getWorld(worldX, worldY, worldZ));
     }
 

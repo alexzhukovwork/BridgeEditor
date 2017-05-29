@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphic;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Алексей
- */
 public class Camera implements Coordinats, Serializable{
     public double x, y, z;
     public double d;
@@ -39,8 +30,8 @@ public class Camera implements Coordinats, Serializable{
         angleY = Math.toDegrees( Math.acos(vertexMul / (cameraLength * dotLength)) );
         angleY *= this.e.x - this.x < 0 ? 1 : -1;
                
-        c = new Vertex(0, 0, this.e.z - z);
-        e = new Vertex(0, this.e.y - y, this.e.z - z);
+        c = new Vertex(this.e.x - x, 0, this.e.z - z);
+        e = new Vertex(this.e.x - x, this.e.y - y, this.e.z - z);
         cameraLength =  Vertex.getLen(c);
         dotLength = Vertex.getLen(e);
         vertexMul = Vertex.multiplyD(e, c);

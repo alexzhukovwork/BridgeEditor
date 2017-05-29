@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphic;
 
 import java.awt.Color;
@@ -11,10 +6,6 @@ import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-/**
- *
- * @author Алексей
- */
 public class RenderCabel implements IRender {
     private Graphics2D g2;
 
@@ -67,7 +58,7 @@ public class RenderCabel implements IRender {
                     v2.y += height / 2 + v2.y*d/(v2.z + d);
                     v3.x += width / 2 + v3.x*d/(v3.z + d);
                     v3.y += height / 2 + v3.y*d/(v3.z + d);
-                }else{
+                } else {
                     v1.x += width / 2;
                     v1.y += height / 2;
                     v2.x += width / 2;

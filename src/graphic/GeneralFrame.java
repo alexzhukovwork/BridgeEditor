@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphic;
 
 import java.awt.BorderLayout;
@@ -45,21 +40,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
 
-/**
- *
- * @author Алексей
- */
 public class GeneralFrame extends javax.swing.JFrame implements Serializable{
 
-    /**
-     * Creates new form GeneralFrame
-     */
     private boolean center = true;
     private Model model;
     private List<Model> models = new ArrayList<>();
@@ -420,7 +410,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         );
         workPanelLayout.setVerticalGroup(
             workPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 463, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jSelectModel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -629,7 +619,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                                 .addComponent(jSplitPane18, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jSplitPane19, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 21, Short.MAX_VALUE))))
+                        .addGap(0, 33, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -763,7 +753,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                             .addComponent(jSplitPane17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jSplitPane18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jSplitPane19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bChangeModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bCreateModel)
@@ -964,12 +954,12 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1390, Short.MAX_VALUE))
                     .addComponent(workPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jSelectModel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addGap(8, 8, 8))
         );
         layout.setVerticalGroup(
@@ -1112,6 +1102,13 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
 
         if (result == JFileChooser.APPROVE_OPTION ){
             try {
+                if( !fileChooser.getSelectedFile().getPath().contains(".out")){
+                    JOptionPane.showMessageDialog(this, 
+                    "Формат файла должен быть .out", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 serialize( fileChooser.getSelectedFile().getPath() );
                 System.out.println(fileChooser.getSelectedFile().getPath());
                 JOptionPane.showMessageDialog(this, 
@@ -1125,13 +1122,20 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
 
     private void jLoadSceneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoadSceneActionPerformed
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Сохранение файла");
+        fileChooser.setDialogTitle("Загрузка файла");
 
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int result = fileChooser.showOpenDialog(new JFileChooser());
 
         if (result == JFileChooser.APPROVE_OPTION ){
             try {
+                if( !fileChooser.getSelectedFile().getPath().contains(".out")){
+                    JOptionPane.showMessageDialog(this, 
+                    "Формат файла должен быть .out", 
+                    "Ошибка", 
+                    JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 unserialize( fileChooser.getSelectedFile().getPath() );
                 System.out.println(fileChooser.getSelectedFile().getPath());
                 JOptionPane.showMessageDialog(this, 
@@ -1204,9 +1208,13 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         ( (Bridge)models.get(models.size() - 1) ).createModel();
         jSelectModel.addItem(bridge.getName());
         jSelectModel.setSelectedIndex( models.size() - 1 );
-
-        workPanel.repaint();
+        
+        JOptionPane.showMessageDialog(this, 
+                    "Мост создан", 
+                    "Готово", 
+                    JOptionPane.INFORMATION_MESSAGE);
         this.requestFocus();
+        workPanel.repaint();  
     }//GEN-LAST:event_bCreateModelActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
@@ -1236,6 +1244,10 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         jSelectModel.removeAllItems();
         setListBox();
 
+        JOptionPane.showMessageDialog(this, 
+                    "Мост удален", 
+                    "Готово", 
+                    JOptionPane.INFORMATION_MESSAGE);
         this.requestFocus();
         workPanel.repaint();
     }//GEN-LAST:event_jDeleteActionPerformed
@@ -1268,9 +1280,9 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         jMetalWidth.setValue( ( (Bridge)models.get(number) ).metalWidth );
         jCountHole.setValue( ( (Bridge)models.get(number) ).countThirdHole );
         jCountRope.setValue( ( (Bridge)models.get(number) ).countRope );
-        jScaleX.setValue(  ( (Bridge)models.get(number) ).dx );
-        jScaleY.setValue(  ( (Bridge)models.get(number) ).dy );
-        jScaleZ.setValue(  ( (Bridge)models.get(number) ).dz );
+        jScaleX.setValue(( (Bridge)models.get(number) ).scaleX );
+        jScaleY.setValue(( (Bridge)models.get(number) ).scaleY );
+        jScaleZ.setValue(( (Bridge)models.get(number) ).scaleZ );
     }
     
     private void setModelParam(int number){
@@ -1296,14 +1308,14 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         ( (Bridge)models.get(number) ).metalWidth = (Double)( jMetalWidth.getValue() );
         ( (Bridge)models.get(number) ).countThirdHole = (int)( jCountHole.getValue() );
         ( (Bridge)models.get(number) ).countRope = (int)( jCountRope.getValue() );
-        ( (Bridge)models.get(number) ).dx = (Double)( jScaleX.getValue() );
-        ( (Bridge)models.get(number) ).dy = (Double)( jScaleY.getValue() );
-        ( (Bridge)models.get(number) ).dz = (Double)( jScaleZ.getValue() );
+        ( (Bridge)models.get(number) ).scaleX = (Double)( jScaleX.getValue() );
+        ( (Bridge)models.get(number) ).scaleY = (Double)( jScaleY.getValue() );
+        ( (Bridge)models.get(number) ).scaleZ = (Double)( jScaleZ.getValue() );
     }
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ClassNotFoundException, ClassNotFoundException, ClassNotFoundException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -1325,8 +1337,18 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GeneralFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
+        try {
+            //</editor-fold>
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(GeneralFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(GeneralFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(GeneralFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(GeneralFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -1484,7 +1506,7 @@ public class GeneralFrame extends javax.swing.JFrame implements Serializable{
     
     private void setCameraEdit(){
         jCameraX.setValue(camera.x);
-        jCameraY.setValue(camera.y);
+        jCameraY.setValue(-camera.y);
         jCameraZ.setValue(camera.z);
         jCameraAngleX.setValue(camera.angleX);
         jCameraAngleY.setValue(-camera.angleY);
